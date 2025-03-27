@@ -13,7 +13,8 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
      * 
      */
 
-    [SerializeField] private int quality = -1;
+    // Ice Location Quality
+    private int quality = -1;
     private float timeMined = -1;
     private float timeLeftFrozen= -1;
 
@@ -29,9 +30,29 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
         this.timeLeftFrozen = frozenLength;
     }
 
+    void Start()
+    {
+        StartCoroutine(melt());
+    }
+
+    void Update()
+    {
+        
+    }
+
+    private IEnumerator melt()
+    {
+        // melt one time unit (s) (timer ticking down in seconds)
+        yield return new WaitForSeconds(1f);
+        if(timeLeftFrozen > 0 )
+        {
+            StartCoroutine(melt());
+        }
+    }
+
     public void Interact()
     {
-        // Do nothing, pickup interface
+        // Do nothing, Pickup() handles this logic 
     }
 
     public void Pickup()
@@ -40,15 +61,19 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
         Debug.Log("Ice picked up");
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public int GetQuality()
     {
-        
+        return this.quality;
     }
 
-    // Update is called once per frame
-    void Update()
+    public float GetTimeMined()
     {
-        
+        return this.timeMined;
     }
+
+    public float GetTimeLeftFrozen()
+    {
+        return this.timeLeftFrozen;
+    }
+
 }

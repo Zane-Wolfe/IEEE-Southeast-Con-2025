@@ -18,7 +18,7 @@ public class IceDeposit : MonoBehaviour, IInteractable
 
     void Update()
     {
-        
+
     }
 
     public void Interact()
@@ -31,6 +31,7 @@ public class IceDeposit : MonoBehaviour, IInteractable
         if (hitsBeforeNextIceDrop == 0)
         {
             DropIce();
+            hitsBeforeNextIceDrop = hitsPerDrop;
             return;
         }
     }

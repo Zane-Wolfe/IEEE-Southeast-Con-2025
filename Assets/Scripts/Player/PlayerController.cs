@@ -69,13 +69,13 @@ public class PlayerController : MonoBehaviour
     {
         interactedObject.GetComponent<IInteractable>().Interact();
 
-        Debug.Log("Interacted with " + interactedObject.name);
+        //Debug.Log("Interacted with " + interactedObject.name);
         if(interactedObject.GetComponent<IPickupable>() != null)
         {
             if(heldItem == null) {
                 interactedObject.GetComponent<IPickupable>().Pickup();
                 heldItem = interactedObject;
-                Debug.Log("Now holding " + interactedObject.name);
+                //Debug.Log("Now holding " + interactedObject.name);
             }
             // If interact key was hit again while holding item (Meaning Drop item)
             else if(heldItem == interactedObject)
@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
                 heldItem.transform.position = dropItemPos;
                 heldItem = null;
             }else {
-                Debug.Log("HAND IS FULL!");
+                //Debug.Log("HAND IS FULL!");
                 // Do other logic here?
             }
         }
