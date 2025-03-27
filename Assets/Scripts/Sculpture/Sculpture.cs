@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sculpture : MonoBehaviour
+public class Sculpture : MonoBehaviour, IInteractable, IPickupable
 {
     // Ice Location Quality
     private int quality = -1;
@@ -12,6 +12,8 @@ public class Sculpture : MonoBehaviour
     // Where does this value come from?
     private int sculptureQuality = -1;
 
+    // isOnTable means you can't pick it up until 
+    private bool isOnTable = false;
     private bool isFinished = false;
     private int modelType = -1;
     private float progress = 0f;
@@ -50,5 +52,19 @@ public class Sculpture : MonoBehaviour
     public float GetSellValue()
     {
         return (timeLeftFrozen * quality);
+    }
+
+    public void Interact()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Pickup()
+    {
+        if(isOnTable)
+        {
+
+        }
+        throw new System.NotImplementedException();
     }
 }
