@@ -34,12 +34,16 @@ public class PlayerInteractHandler : MonoBehaviour
             // SELECT ITEM SHADDER HERE @CC
         }
 
+        // Clean any destroyed objects from the list
+        interactableObjectsNearby.RemoveAll(obj => obj == null);
+        
         // If more than one interactable object is nearby, show the interact icon
         showInteractIcon = interactableObjectsNearby.Count > 0;
+        
         // Handle Interact Input
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (showInteractIcon)
+            if (showInteractIcon && interactableObjectsNearby[0] != null)
             {
                 playerController.HandleInteract(closestInteractableItem);
             }

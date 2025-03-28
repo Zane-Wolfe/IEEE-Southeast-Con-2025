@@ -23,6 +23,14 @@ public class SellingTable : BaseTable
             
             RemoveIce();
             Destroy(currentIce.gameObject);
+
+            // TODO: Add particle effect
+
+            // TODO: Add sound effect
+
+            // TODO: Add animation
+
+            // TODO: Add text popup
         }
     }
 }

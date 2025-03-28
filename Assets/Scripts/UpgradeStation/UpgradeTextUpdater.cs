@@ -20,8 +20,7 @@ public class UpgradeTextUpdater : MonoBehaviour
     private int currentCost = -1;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         moneyText = moneyTextObject.GetComponent<TMPro.TextMeshProUGUI>();
         UpdateMoneyText();
         levelText = levelTextObject.GetComponent<TMPro.TextMeshProUGUI>();
@@ -30,8 +29,7 @@ public class UpgradeTextUpdater : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         
     }
 
@@ -56,7 +54,6 @@ public class UpgradeTextUpdater : MonoBehaviour
         } else {
             // Do something if player does not have enough money to buy upgrade.
         }
-        
     }
 
     private void UpdateUpgradeText() {
