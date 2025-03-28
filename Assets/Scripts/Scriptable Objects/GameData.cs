@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameData", menuName = "ScriptableObjects/GameData", order = 1)]
 public class GameData : ScriptableObject
 {
-    public float playerMoney = 0;
+    public int playerMoney = 0;
 
     // Upgrades System
     // Constants
@@ -17,6 +17,9 @@ public class GameData : ScriptableObject
     public int carSpeedUpgradeCost = -1;
     public int pickUpgradeCost = -1;
     public int chiselUpgradeCost = -1;
+    public int maxWalkingSpeed = 4;
+    public int maxCarSpeed = 10;
+    public int maxPickLevel = 15;
 
     // Levels
     public int walkSpeedLevel = 1;
