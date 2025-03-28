@@ -12,4 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d4233cb359cb1b42b1df13eef5fe949, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  playerMoney: 0
+  playerMoney: 999
+  walkingSpeed: -1
+  carSpeed: -1
+  pickQuality: -1
+  chiselQuality: -1
+  walkSpeedUpgradeCost: -1
+  carSpeedUpgradeCost: -1
+  pickUpgradeCost: -1
+  chiselUpgradeCost: -1
+  maxWalkingSpeed: 4
+  maxCarSpeed: 10
+  maxPickLevel: 15
+  walkSpeedLevel: 1
+  carSpeedLevel: 1
+  pickLevel: 1
+  chiselLevel: 1

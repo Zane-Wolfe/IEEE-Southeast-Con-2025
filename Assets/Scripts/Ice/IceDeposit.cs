@@ -47,6 +47,7 @@ public class IceDeposit : MonoBehaviour, IInteractable
         int iceQuality = 5;
         float frozenLength = 300;
         newIce.CreateIce(iceQuality, frozenLength);
+        IceMeltManager.Instance.AddIce(newIce);
     }
 
     

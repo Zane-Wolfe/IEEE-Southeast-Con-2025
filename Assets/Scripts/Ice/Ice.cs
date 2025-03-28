@@ -4,35 +4,35 @@ using UnityEngine;
 
 public class Ice : MonoBehaviour, IInteractable, IPickupable 
 {
+    // Ice Location base Quality from 1 to 10
+    protected int baseValue;
 
-    /**
-     * Quality (int) (get better by getting better ice)
-       TimeSinceMined (long)
-       TimeLeftFrozen (long)
-       Pickupable
-     * 
-     */
+    // size of the ice vended 
+    // values from 0.8 to 1.2 ish
+    protected float baseSize;
 
-    // Ice Location Quality
-    private int quality = -1;
-    private float timeMined = -1;
-    private float timeLeftFrozen= -1;
+    // size modifier due to melting
+    // values range from 1.0 to 0.0
+    protected float size;
 
-    // Call this function from IceDeposit to create ice variables
-    /*
-     * quality = DEFINE HERE
-     * frozenLength = time in seconds that ice will be frozen for 
-     */
-    public void CreateIce(int quality, float frozenLength)
+    // how much the size modifier should be decreased per second
+    protected float currentMeltRate = 0.0f;
+
+    public void CreateIce(int value, float size) 
     {
-        this.quality = quality;
-        this.timeMined = Time.timeSinceLevelLoad;
-        this.timeLeftFrozen = frozenLength;
+        baseValue = value;
+        baseSize = size;
+        this.size = size;
+    }
+
+    public void CreateIceWithRandomSize(int baseValue)
+    {
+        CreateIce(baseValue, Random.Range(0.8f, 1.2f));
     }
 
     void Start()
     {
-        StartCoroutine(melt());
+        
     }
 
     void Update()
@@ -40,15 +40,41 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
         
     }
 
-    private IEnumerator melt()
+    /// <summary>
+    /// Melts the ice object by its currentMeltRate normalized by deltaTime
+    /// </summary>
+    public void Melt(float deltaTime)
     {
-        // melt one time unit (s) (timer ticking down in seconds)
-        yield return new WaitForSeconds(1f);
-        if(timeLeftFrozen > 0 )
-        {
-            StartCoroutine(melt());
-        }
+        size = size - (currentMeltRate * deltaTime);
     }
+
+    /// <summary>
+    /// Sets the rate of size removal by Melt()
+    /// </summary>
+    /// <param name="rate"></param>
+    public void SetMeltRate(float rate)
+    {
+        currentMeltRate = rate;
+    }
+
+    /// <summary>
+    /// Returns whether or not the ice should be destroyed
+    /// </summary>
+    /// <returns></returns>
+    public bool IsMelted()
+    {
+        return size <= 0.0f;
+    }
+
+    /// <summary>
+    /// How much is this worth when sold at the shop?
+    /// </summary>
+    /// <returns></returns>
+    public int GetSellValue()
+    {
+        return -1; // punish the user for even trying this
+    }
+
 
     public void Interact()
     {
@@ -59,21 +85,6 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
     {
         // Run any logic here when picked up
         Debug.Log("Ice picked up");
-    }
-
-    public int GetQuality()
-    {
-        return this.quality;
-    }
-
-    public float GetTimeMined()
-    {
-        return this.timeMined;
-    }
-
-    public float GetTimeLeftFrozen()
-    {
-        return this.timeLeftFrozen;
     }
 
 }
