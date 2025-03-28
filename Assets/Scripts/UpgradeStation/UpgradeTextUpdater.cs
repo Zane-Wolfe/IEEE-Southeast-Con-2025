@@ -17,7 +17,7 @@ public class UpgradeTextUpdater : MonoBehaviour
     private TMPro.TextMeshProUGUI moneyText;
     private TMPro.TextMeshProUGUI levelText;
     private TMPro.TextMeshProUGUI buttonText;
-    private int currentCost = -1;
+    private int currentCost = 0;
 
     // Start is called before the first frame update
     void Start() {
@@ -58,24 +58,52 @@ public class UpgradeTextUpdater : MonoBehaviour
 
     private void UpdateUpgradeText() {
         int currentLevel = -1;
-        int baseCost = -1;
+        int baseCost;
         int maxLevel = -1;
         if(upgradeType == UpgradeType.WalkSpeed) {
             currentLevel = gameData.walkSpeedLevel;
             baseCost = gameData.walkSpeedUpgradeCost;
             maxLevel = gameData.maxWalkingSpeed;
+
+            // New Cost Formula
+            if(currentLevel == 1) {
+                currentCost = baseCost;
+            } else {
+                currentCost = currentCost - baseCost + (baseCost*2*(currentLevel-1)); // Update Formula Here
+            }
         } else if(upgradeType == UpgradeType.CarSpeed) {
             currentLevel = gameData.carSpeedLevel;
             baseCost = gameData.carSpeedUpgradeCost;
             maxLevel = gameData.maxCarSpeed;
+
+            // New Cost Formula
+            if(currentLevel == 1) {
+                currentCost = baseCost;
+            } else {
+                currentCost = currentCost - baseCost + (baseCost*2*(currentLevel-1)); // Update Formula Here
+            }
         } else if(upgradeType == UpgradeType.PickQuality) {
             currentLevel = gameData.pickLevel;
             baseCost = gameData.pickUpgradeCost;
             maxLevel = gameData.maxPickLevel;
+
+            // New Cost Formula
+            if(currentLevel == 1) {
+                currentCost = baseCost;
+            } else {
+                currentCost = currentCost - baseCost + (baseCost*2*(currentLevel-1)); // Update Formula Here
+            }
         } else if(upgradeType == UpgradeType.ChiselQuality) {
             currentLevel = gameData.chiselLevel;
             baseCost = gameData.chiselUpgradeCost;
             maxLevel = 9999;
+
+            // New Cost Formula
+            if(currentLevel == 1) {
+                currentCost = baseCost;
+            } else {
+                currentCost = currentCost - baseCost + (baseCost*2*(currentLevel-1)); // Update Formula Here
+            }
         }
 
         // Update Level Text
@@ -87,7 +115,6 @@ public class UpgradeTextUpdater : MonoBehaviour
         }
 
         //Update Button Text
-        currentCost = baseCost * currentLevel; // Update formula here
         buttonText.text = "$" + currentCost.ToString();
     }
 }
