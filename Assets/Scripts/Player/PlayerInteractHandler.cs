@@ -8,6 +8,8 @@ public class PlayerInteractHandler : MonoBehaviour
     private bool showInteractIcon = false;
     [SerializeField] private List<GameObject> interactableObjectsNearby = new List<GameObject>();
     private PlayerController playerController;
+
+    private GameObject closestInteractableItem;
     
 
 
@@ -18,6 +20,20 @@ public class PlayerInteractHandler : MonoBehaviour
 
     void Update()
     {
+        GameObject newClosestInteractableItem = findClosestItem();
+        // Found a new closest item or none are in range anymore, deselect the old item
+        if(newClosestInteractableItem != closestInteractableItem)
+        {
+            //
+            //  DESELECT ITEM SHADDER HERE @CC
+            //
+        }
+        closestInteractableItem = newClosestInteractableItem;
+        if (closestInteractableItem != null)
+        {
+            // SELECT ITEM SHADDER HERE @CC
+        }
+
         // If more than one interactable object is nearby, show the interact icon
         showInteractIcon = interactableObjectsNearby.Count > 0;
         // Handle Interact Input
@@ -25,13 +41,40 @@ public class PlayerInteractHandler : MonoBehaviour
         {
             if (showInteractIcon)
             {
-                playerController.HandleInteract(interactableObjectsNearby[0]);
+                playerController.HandleInteract(closestInteractableItem);
             }
             else
             {
                 Debug.Log("Nothing to interact with!");
             }
         }
+
+    }
+
+    private GameObject findClosestItem()
+    {
+        if (interactableObjectsNearby.Count == 0) return null;
+        if(interactableObjectsNearby.Count == 1) return interactableObjectsNearby[0];
+        // Calculate the correct item to interact with
+        // interactableObjectsNearby contains a list of all objects in the colider cone
+        Vector3 playerPos = playerController.transform.position;
+        GameObject closetObj = interactableObjectsNearby[0];
+        float closestLength = Mathf.Infinity;
+        foreach (GameObject obj in interactableObjectsNearby)
+        {
+            float distance = Vector3.Distance(obj.transform.position, playerPos);
+            if (distance < closestLength)
+            {
+                closestLength = distance;
+                closetObj = obj;
+            }
+        }
+        return closetObj;
+    }
+
+    public GameObject getClosestTargetItem()
+    {
+        return closestInteractableItem;
     }
 
     private void OnTriggerEnter(Collider other)
