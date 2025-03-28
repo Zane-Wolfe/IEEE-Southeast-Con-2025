@@ -48,6 +48,12 @@ public class IceDeposit : MonoBehaviour, IInteractable
         float frozenLength = 300;
         newIce.CreateIce(iceQuality, frozenLength);
         IceMeltManager.Instance.AddIce(newIce);
+
+        // TODO: Add particle effect
+
+        // TODO: Add sound effect
+
+        // TODO: Record the pick quality
     }
 
     

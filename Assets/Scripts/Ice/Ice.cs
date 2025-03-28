@@ -18,11 +18,14 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
     // how much the size modifier should be decreased per second
     protected float currentMeltRate = 0.0f;
 
+    protected MeshFilter meshFilter;
+
     public void CreateIce(int value, float size) 
     {
         baseValue = value;
         baseSize = size;
         this.size = size;
+        UpdateMeshScale();
     }
 
     public void CreateIceWithRandomSize(int baseValue)
@@ -32,12 +35,32 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
 
     void Start()
     {
-        
+        // Get the MeshFilter component
+        meshFilter = GetComponent<MeshFilter>();
+        if (meshFilter == null)
+        {
+            Debug.LogWarning("No MeshFilter component found on Ice object!");
+        }
     }
 
     void Update()
     {
-        
+        // Update the mesh scale if melting
+        if (currentMeltRate > 0)
+        {
+            UpdateMeshScale();
+        }
+    }
+
+    /// <summary>
+    /// Updates the mesh scale based on the current size
+    /// </summary>
+    protected void UpdateMeshScale()
+    {
+        if (meshFilter != null)
+        {
+            transform.localScale = Vector3.one * size;
+        }
     }
 
     /// <summary>
@@ -46,6 +69,7 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
     public void Melt(float deltaTime)
     {
         size = size - (currentMeltRate * deltaTime);
+        UpdateMeshScale();
     }
 
     /// <summary>
@@ -68,13 +92,14 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
 
     /// <summary>
     /// How much is this worth when sold at the shop?
+    /// Base implementation calculates value based on baseValue and current size
     /// </summary>
-    /// <returns></returns>
-    public int GetSellValue()
+    /// <returns>The calculated sell value</returns>
+    public virtual int GetSellValue()
     {
-        return -1; // punish the user for even trying this
+        // melting ice will reduce its value
+        return Mathf.RoundToInt(baseValue * size);
     }
-
 
     public void Interact()
     {
@@ -86,5 +111,4 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
         // Run any logic here when picked up
         Debug.Log("Ice picked up");
     }
-
 }
