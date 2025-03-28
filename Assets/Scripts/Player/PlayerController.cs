@@ -117,7 +117,6 @@ public class PlayerController : MonoBehaviour
             
             return hitPoint;
         }
-
         return Vector3.zero;
     }
 

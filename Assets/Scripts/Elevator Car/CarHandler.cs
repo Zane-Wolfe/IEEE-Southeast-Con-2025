@@ -14,18 +14,22 @@ public class CarHandler : MonoBehaviour
     [SerializeField] private bool carMoving = false;
 
     [SerializeField] private CameraController cameraController;
+    private LineRenderer cableLineRender;
 
     void Start()
     {
+        this.cableLineRender = GetComponent<LineRenderer>();
         // Car starts at the bottom of the moutain
         goingUp = true;
-        
-       
+        cableLineRender.SetPosition(0, posBottom.position);
+        cableLineRender.SetPosition(1, posTop.position);
+
     }
 
     // Move to the target end position.
     void Update()
     {
+        
         if(carMoving)
         {
             Transform startPos = posBottom;
