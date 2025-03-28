@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering.Universal.Internal;
 
@@ -7,6 +8,9 @@ public class PlayerController : MonoBehaviour
 {
     private GameObject heldItem = null;
     private Camera mainCamera = null;
+
+    [SerializeField]
+    private int throwForce = 5;
 
     private void Start()
     {
@@ -25,9 +29,14 @@ public class PlayerController : MonoBehaviour
 
         if(heldItem != null)
         {
-            Vector3 heldItemPos = gameObject.transform.position;
-            heldItemPos.y += 1;
+            Vector3 heldItemPos = heldItem.transform.position;
+            Quaternion heldItemRot = heldItem.transform.rotation;
+            Rigidbody heldRigidbody = heldItem.GetComponent<Rigidbody>();
+            heldItemPos = transform.forward + transform.position;
+            heldItemRot = transform.rotation;
             heldItem.transform.position = heldItemPos;
+            heldItem.transform.rotation = heldItemRot;
+            heldRigidbody.isKinematic = true;
         }
         
         // END TEMP INTERACT VISUALIZER CODE
@@ -83,7 +92,7 @@ public class PlayerController : MonoBehaviour
         transform.LookAt(GetMouseDir());
         //GetMouseDir();
         
-        //playerVelocity.y += gravityValue * Time.deltaTime;
+        playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
@@ -105,9 +114,11 @@ public class PlayerController : MonoBehaviour
             else if(heldItem == interactedObject)
             {
                 // Drop item
-                Vector3 dropItemPos = gameObject.transform.forward;
-                dropItemPos.y += 1;
-                heldItem.transform.position = dropItemPos;
+                //Vector3 dropItemPos = transform.forward + transform.position;
+                //heldItem.transform.position = dropItemPos;
+                Rigidbody heldRigidbody = heldItem.GetComponent<Rigidbody>();
+                heldRigidbody.isKinematic = false;
+                heldRigidbody.AddForce(transform.forward * throwForce, ForceMode.Impulse);
                 heldItem = null;
             }else {
                 //Debug.Log("HAND IS FULL!");
