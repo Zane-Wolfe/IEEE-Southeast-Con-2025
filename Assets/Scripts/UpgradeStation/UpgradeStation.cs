@@ -23,7 +23,6 @@ public class UpgradeStation : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        Debug.Log("Entered Upgrade Station");
-        upgradesMenu.SetActive(true);
+        upgradesMenu.SetActive(!upgradesMenu.activeSelf);
     }
 }
