@@ -13,6 +13,7 @@ public class CarHandler : MonoBehaviour
     private float journeyLength;
     [SerializeField] private bool carMoving = false;
 
+    [SerializeField] private CameraController cameraController;
 
     void Start()
     {
@@ -32,8 +33,8 @@ public class CarHandler : MonoBehaviour
             if (!goingUp)
             {
                 // Switch direction if going down
-                startPos = endPos;
-                endPos = startPos;
+                startPos = posTop;
+                endPos = posBottom;
             }
             
             // Distance moved equals elapsed time times speed..
@@ -56,6 +57,7 @@ public class CarHandler : MonoBehaviour
                 // make player back to normal
                 playerController.freezePlayer = false;
                 playerController.transform.parent = null;
+                cameraController.setTarget(playerController.transform);
             }
         }
     }
@@ -84,6 +86,7 @@ public class CarHandler : MonoBehaviour
         if (!other.gameObject.tag.Equals("Player")) return;
         playerController.freezePlayer = true;
         playerController.transform.parent = this.transform;
+        cameraController.setTarget(this.transform);
 
         startCarMoving();
     }
