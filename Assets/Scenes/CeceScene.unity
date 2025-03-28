@@ -626,7 +626,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.759434, g: 0.9803922, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -1087,6 +1087,21 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2258650066571037182, guid: da077e5a05fdb4b74aa61293e8bd6e8c,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2258650066571037182, guid: da077e5a05fdb4b74aa61293e8bd6e8c,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2258650066571037182, guid: da077e5a05fdb4b74aa61293e8bd6e8c,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2258650066571037182, guid: da077e5a05fdb4b74aa61293e8bd6e8c,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1135,6 +1150,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2258650066571037182, guid: da077e5a05fdb4b74aa61293e8bd6e8c,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4756172560675298213, guid: da077e5a05fdb4b74aa61293e8bd6e8c,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -1918741649104114524, guid: e106c54040eab472f86e552878f189d2,
+        type: 3}
     - target: {fileID: 5168331742787218105, guid: da077e5a05fdb4b74aa61293e8bd6e8c,
         type: 3}
       propertyPath: m_Name
