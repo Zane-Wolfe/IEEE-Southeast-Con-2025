@@ -1126,6 +1126,7 @@ GameObject:
   - component: {fileID: 1312302287}
   - component: {fileID: 1312302286}
   - component: {fileID: 1312302285}
+  - component: {fileID: 1312302288}
   m_Layer: 5
   m_Name: back
   m_TagString: Untagged
@@ -1196,7 +1197,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1312302286}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1312302288}
+        m_TargetAssemblyTypeName: MenuStuff, Assembly-CSharp
+        m_MethodName: openTheMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1312302286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1235,6 +1248,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1312302283}
   m_CullTransparentMesh: 1
+--- !u!114 &1312302288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312302283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82d1c9083ffcd8da8a58b0a3b680eda1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1668946123
 GameObject:
   m_ObjectHideFlags: 0
@@ -1379,6 +1404,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1787516727}
   - component: {fileID: 1787516728}
+  - component: {fileID: 1787516729}
   m_Layer: 5
   m_Name: volume
   m_TagString: Untagged
@@ -1453,13 +1479,38 @@ MonoBehaviour:
   m_FillRect: {fileID: 1013940391}
   m_HandleRect: {fileID: 318256813}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -80
+  m_MaxValue: 20
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: -31.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1787516729}
+        m_TargetAssemblyTypeName: Volume, Assembly-CSharp
+        m_MethodName: setMasterVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1787516729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787516726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e798d90312c539c268c226702ca04c6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixer: {fileID: 24100000, guid: c75ffd0c44009cc28963e399027867cb, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
