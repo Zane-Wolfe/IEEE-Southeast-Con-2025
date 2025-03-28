@@ -178,7 +178,7 @@ Transform:
   m_GameObject: {fileID: 321802810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.42, y: 0.33, z: 1.9622744}
+  m_LocalPosition: {x: 7, y: 0, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -634,6 +634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwForce: 5
+  freezePlayer: 0
   playerSpeed: 4
   jumpHeight: 1
 --- !u!1 &564936557
@@ -1073,6 +1074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1415622119}
+  - component: {fileID: 1415622120}
   m_Layer: 0
   m_Name: CameraHolder
   m_TagString: Untagged
@@ -1096,6 +1098,20 @@ Transform:
   - {fileID: 330585546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 20, y: 45, z: 0}
+--- !u!114 &1415622120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415622118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a64ab41ece7df734b833d89cd4458cd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTransform: {fileID: 535603907}
+  cameraViewOffset: {x: -9.35, y: 6.27, z: -9.35}
 --- !u!1 &1777731773
 GameObject:
   m_ObjectHideFlags: 0
@@ -1197,7 +1213,7 @@ Transform:
   m_GameObject: {fileID: 1777731773}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.42, y: 0.33, z: 1.9622744}
+  m_LocalPosition: {x: 7, y: 0, z: 2}
   m_LocalScale: {x: 4, y: 1, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1240,7 +1256,7 @@ MonoBehaviour:
   posBottom: {fileID: 321802811}
   speed: 1
   carMoving: 0
-  playerRB: {fileID: 0}
+  playerController: {fileID: 535603909}
 --- !u!1 &1799170407
 GameObject:
   m_ObjectHideFlags: 0

@@ -54,8 +54,8 @@ public class CarHandler : MonoBehaviour
                 goingUp = !goingUp;
 
                 // make player back to normal
-                playerRB.isKinematic = false;
-                playerRB.transform.parent = null;
+                playerController.freezePlayer = false;
+                playerController.transform.parent = null;
             }
         }
     }
@@ -76,14 +76,14 @@ public class CarHandler : MonoBehaviour
         return this.carMoving;
     }
 
-    [SerializeField] private Rigidbody playerRB;
+    [SerializeField] private PlayerController playerController;
 
     private void OnTriggerEnter(Collider other)
     {
         // Start moving when player boards
         if (!other.gameObject.tag.Equals("Player")) return;
-        playerRB.isKinematic = true;
-        playerRB.transform.parent = this.transform;
+        playerController.freezePlayer = true;
+        playerController.transform.parent = this.transform;
 
         startCarMoving();
     }

@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
         controller = gameObject.GetComponent<CharacterController>();
         heldItem = null;
         mainCamera = Camera.main;
+        freezePlayer = false;
     }
 
     
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
+    public bool freezePlayer = false;
     [SerializeField] private float playerSpeed = 2.0f;
     [SerializeField] private float jumpHeight = 1.0f;
     private float gravityValue = -9.81f;
@@ -77,6 +79,13 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovementReal()
     {
+        //look vector
+        //gameObject.transform.forward = 
+        transform.LookAt(GetMouseDir());
+        //GetMouseDir();
+
+        if (freezePlayer) return;
+
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
@@ -87,11 +96,7 @@ public class PlayerController : MonoBehaviour
         Quaternion diagonal = Quaternion.Euler(0, 45, 0);
         controller.Move(diagonal * input * Time.deltaTime * playerSpeed);
 
-        //look vector
-        //gameObject.transform.forward = 
-        transform.LookAt(GetMouseDir());
-        //GetMouseDir();
-        
+
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }
