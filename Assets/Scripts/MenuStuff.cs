@@ -3,6 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class MenuStuff : MonoBehaviour
 {
+    public GameObject main;
+    public GameObject credits;
+    public GameObject options;
+
     public void playTheGame() {
         SceneManager.LoadScene("MainScene");
     }
@@ -15,14 +19,20 @@ public class MenuStuff : MonoBehaviour
     }
 
     public void openTheOptions() {
-        SceneManager.LoadScene("Options");
+        main.SetActive(false);
+        credits.SetActive(false);
+        options.SetActive(true);
     }
 
     public void openTheCredits() {
-        SceneManager.LoadScene("Credits");
+        main.SetActive(false);
+        credits.SetActive(true);
+        options.SetActive(false);
     }
 
     public void openTheMainMenu() {
-        SceneManager.LoadScene("MainMenu");
+        main.SetActive(true);
+        credits.SetActive(false);
+        options.SetActive(false);
     }
 }
