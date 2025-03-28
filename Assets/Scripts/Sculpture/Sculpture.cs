@@ -2,56 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Sculpture : MonoBehaviour, IInteractable, IPickupable
+public class Sculpture : Ice
 {
-    // Ice Location Quality
-    private int quality = -1;
-    private float timeMined = -1;
-    private float timeLeftFrozen = -1;
+    private float toolQualityMultiplier = 1.0f;
+    
+    private float sculptureQualityMultiplier = 1.0f;
+    
+    private bool isLockedOnTable = false;
 
-    // Where does this value come from?
-    private int sculptureQuality = -1;
-
-    // isOnTable means you can't pick it up until 
-    private bool isOnTable = false;
-    private bool isFinished = false;
+    /// <summary>
+    /// Used to tell which sculpture model it is
+    /// </summary>
     private int modelType = -1;
-    private float progress = 0f;
+    
+    private float completionProgress = 0f;
 
-
-    public void CreateSculpture(Ice iceData)
+    public new int GetSellValue()
     {
-        this.quality = iceData.GetQuality();
-        this.timeMined  = iceData.GetTimeMined();
-        this.timeLeftFrozen = iceData.GetTimeLeftFrozen();
-
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        StartCoroutine(melt());
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private IEnumerator melt()
-    {
-        // melt one time unit (s) (timer ticking down in seconds)
-        yield return new WaitForSeconds(1f);
-        if (timeLeftFrozen > 0)
-        {
-            StartCoroutine(melt());
-        }
-    }
-
-    public float GetSellValue()
-    {
-        return (timeLeftFrozen * quality);
+        return Mathf.RoundToInt(baseValue * size * toolQualityMultiplier * sculptureQualityMultiplier);
     }
 
     public void Interact()
@@ -61,7 +29,7 @@ public class Sculpture : MonoBehaviour, IInteractable, IPickupable
 
     public void Pickup()
     {
-        if(isOnTable)
+        if(isLockedOnTable)
         {
 
         }
