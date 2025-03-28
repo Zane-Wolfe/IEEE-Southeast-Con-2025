@@ -22,16 +22,18 @@ public class PlayerInteractHandler : MonoBehaviour
     {
         GameObject newClosestInteractableItem = findClosestItem();
         // Found a new closest item or none are in range anymore, deselect the old item
-        if(newClosestInteractableItem != closestInteractableItem)
+        if(newClosestInteractableItem != closestInteractableItem && closestInteractableItem != null)
         {
             //
-            //  DESELECT ITEM SHADDER HERE @CC
+            //  DESELECT ITEM SHADER HERE @CC
             //
+            closestInteractableItem.transform.GetChild(0).gameObject.SetActive(false);
         }
         closestInteractableItem = newClosestInteractableItem;
         if (closestInteractableItem != null)
         {
-            // SELECT ITEM SHADDER HERE @CC
+            // SELECT ITEM SHADER HERE @CC
+            closestInteractableItem.transform.GetChild(0).gameObject.SetActive(true);
         }
 
         // Clean any destroyed objects from the list
