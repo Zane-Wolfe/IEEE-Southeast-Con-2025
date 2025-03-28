@@ -38,16 +38,22 @@ public class IceDeposit : MonoBehaviour, IInteractable
 
     private void DropIce()
     {
-        Vector3 iceSpawnLoc = gameObject.transform.forward;
-        iceSpawnLoc.y += 1;
+        // Spawn ice slightly inside the deposit
+        Vector3 iceSpawnLoc = transform.position + new Vector3(-0.2f, 0, -0.2f);
 
         GameObject newIceObj = Instantiate(iceCubePrefab, iceSpawnLoc, Quaternion.identity);
         Ice newIce = newIceObj.GetComponent<Ice>();
 
         int iceQuality = 5;
-        float frozenLength = 300;
-        newIce.CreateIce(iceQuality, frozenLength);
+        newIce.CreateIceWithRandomSize(iceQuality);
         IceMeltManager.Instance.AddIce(newIce);
+
+        // Add force to push the ice out
+        Rigidbody rb = newIceObj.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.AddForce(transform.forward * 0.5f, ForceMode.Impulse);
+        }
 
         // TODO: Add particle effect
 

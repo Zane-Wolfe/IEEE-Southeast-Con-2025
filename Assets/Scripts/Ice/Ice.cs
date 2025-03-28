@@ -4,22 +4,44 @@ using UnityEngine;
 
 public class Ice : MonoBehaviour, IInteractable, IPickupable 
 {
-    // Ice Location base Quality from 1 to 10
+    /// <summary>
+    /// The base quality/value of the ice, determined by its source location.
+    /// </summary>
     protected int baseValue;
 
-    // size of the ice vended 
-    // values from 0.8 to 1.2 ish
+    /// <summary>
+    /// The initial size of the ice when created.
+    /// Values typically range from 0.8 to 1.2
+    /// </summary>
     protected float baseSize;
 
-    // size modifier due to melting
-    // values range from 1.0 to 0.0
+    /// <summary>
+    /// The current size multiplier of the ice, affected by melting.
+    /// Values range from 1.0 (full size) to 0.0 (fully melted).
+    /// </summary>
     protected float size;
 
-    // how much the size modifier should be decreased per second
-    protected float currentMeltRate = 0.0f;
+    /// <summary>
+    /// The rate at which the size multiplier decreases per second due to melting.
+    /// A value of 0.0f means the ice is not currently melting.
+    /// </summary>
+    protected float currentMeltRate = 0.10f;
 
+    /// <summary>
+    /// The quality/value multiplier of the tool used to create the ice.
+    /// </summary>
+    protected float toolQualityMultiplier = 1.0f;
+
+    /// <summary>
+    /// The MeshFilter component attached to the ice object.
+    /// </summary>
     protected MeshFilter meshFilter;
 
+    /// <summary>
+    /// Creates the ice object with a specified base value and size.
+    /// </summary>
+    /// <param name="value">The base quality/value of the ice.</param>
+    /// <param name="size">The initial size/scale of the ice.</param>
     public void CreateIce(int value, float size) 
     {
         baseValue = value;
@@ -28,6 +50,10 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
         UpdateMeshScale();
     }
 
+    /// <summary>
+    /// Creates the ice object with a random size/scale between 0.8 and 1.2.
+    /// </summary>
+    /// <param name="baseValue">The base quality/value of the ice.</param>
     public void CreateIceWithRandomSize(int baseValue)
     {
         CreateIce(baseValue, Random.Range(0.8f, 1.2f));

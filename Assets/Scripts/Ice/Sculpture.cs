@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Sculpture : Ice
-{
-    private float toolQualityMultiplier = 1.0f;
-    
+{    
+    /// <summary>
+    /// The quality/value multiplier of the tool used to create the sculpture.
+    /// </summary>
     private float sculptureQualityMultiplier = 1.0f;
     
+    /// <summary>
+    /// Whether the sculpture is locked to a table.
+    /// </summary>
     private bool isLockedOnTable = false;
-    
-    private float completionProgress = 0f;
 
     /// <summary>
     /// How much is this sculpture worth when sold at the shop?
