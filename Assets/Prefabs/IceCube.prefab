@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6547928184784839744}
   - component: {fileID: 5583163301381498605}
   - component: {fileID: 4065612104306551682}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GlowObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 1479512696740573801}
   - component: {fileID: 9038810654473688980}
   - component: {fileID: 6769660090020097425}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: IceCube
   m_TagString: Ice
   m_Icon: {fileID: 0}

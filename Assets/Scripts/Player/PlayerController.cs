@@ -86,6 +86,7 @@ public class PlayerController : MonoBehaviour
         if(interactedObject.GetComponent<IPickupable>() != null)
         {
             if(heldItem == null) {
+                
                 interactedObject.GetComponent<IPickupable>().Pickup();
                 heldItem = interactedObject;
                 //Debug.Log("Now holding " + interactedObject.name);
