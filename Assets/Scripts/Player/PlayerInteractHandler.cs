@@ -103,6 +103,7 @@ public class PlayerInteractHandler : MonoBehaviour
         {
             if (showInteractIcon && interactableObjectsNearby[0] != null)
             {
+                Debug.Log(interactableObjectsNearby[0].name);
                 playerController.HandleInteract(closestInteractableItem);
             }
             else

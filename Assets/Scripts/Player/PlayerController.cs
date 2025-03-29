@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
         if (input.magnitude > 0.01f)
         {
             playerAnimator.SetBool("isWalking", true);
-            playerAnimator.speed = playerVelocity.magnitude * 10;
+            playerAnimator.speed = playerVelocity.magnitude * 5;
         }
         else
         {

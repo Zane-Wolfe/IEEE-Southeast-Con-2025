@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public class CarHandler : MonoBehaviour, IInteractable
@@ -27,7 +24,7 @@ public class CarHandler : MonoBehaviour, IInteractable
     {
         this.cableLineRender = GetComponent<LineRenderer>();
         // Car starts at the bottom of the moutain
-        goingUp = true;
+        goingUp = false;
         this.doorAnimatorController = carDoor.GetComponent<Animator>();
     }
 
