@@ -7,6 +7,8 @@ public class GameData : ScriptableObject
 {
     public int playerMoney = 0;
 
+    public float volume = 0;
+
     // Upgrades System
     // Constants
     public int walkingSpeed = -1;

@@ -7,6 +7,11 @@ public class MenuStuff : MonoBehaviour
     public GameObject credits;
     public GameObject options;
 
+    void Start() {
+        float volume = PlayerPrefs.GetFloat("Volume");
+        AudioListener.volume = volume;
+    }
+
     public void playTheGame() {
         SceneManager.LoadScene("MainScene");
     }

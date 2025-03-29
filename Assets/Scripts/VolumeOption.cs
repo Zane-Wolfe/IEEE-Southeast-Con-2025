@@ -1,11 +1,11 @@
 using UnityEngine;
-using UnityEngine.Audio;
 
 public class Volume : MonoBehaviour
 {
-    public AudioMixer mixer;
-
+    public GameData gameData;
     public void setMasterVolume(float v) {
-        mixer.SetFloat("MasterVolume", v);
+        AudioListener.volume = v;
+        gameData.volume = v;
+        PlayerPrefs.SetFloat("Volume", v);
     }
 }
