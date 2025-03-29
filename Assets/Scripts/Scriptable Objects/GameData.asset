@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d4233cb359cb1b42b1df13eef5fe949, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  playerMoney: 99999
+  playerMoney: 9999
   volume: 0
   walkingSpeed: -1
   carSpeed: -1
