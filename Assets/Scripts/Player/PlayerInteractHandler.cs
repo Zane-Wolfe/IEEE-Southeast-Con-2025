@@ -27,7 +27,10 @@ public class PlayerInteractHandler : MonoBehaviour
             //
             //  DESELECT ITEM SHADER HERE @CC
             //
-            closestInteractableItem.transform.GetChild(0).gameObject.SetActive(false);
+            if (closestInteractableItem.transform.childCount > 0)
+            {
+                closestInteractableItem.transform.GetChild(0).gameObject.SetActive(false);
+            }
             if (closestInteractableItem.tag == "Ice") {
                 closestInteractableItem.GetComponent<MeshRenderer>().material.SetFloat("_Refract", 0.05f);
             }
@@ -36,7 +39,10 @@ public class PlayerInteractHandler : MonoBehaviour
         if (closestInteractableItem != null)
         {
             // SELECT ITEM SHADER HERE @CC
-            closestInteractableItem.transform.GetChild(0).gameObject.SetActive(true);
+            if (closestInteractableItem.transform.childCount > 0)
+            {
+                closestInteractableItem.transform.GetChild(0).gameObject.SetActive(true);
+            }
             if (closestInteractableItem.tag == "Ice") {
                 closestInteractableItem.GetComponent<MeshRenderer>().material.SetFloat("_Refract", 0.38f);
             }

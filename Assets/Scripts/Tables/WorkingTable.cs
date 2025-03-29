@@ -77,10 +77,14 @@ public class WorkingTable : BaseTable
         if (sculptureMeshes != null && sculptureMeshes.Length > 0)
         {
             MeshFilter meshFilter = sculpture.GetComponent<MeshFilter>();
+            MeshFilter glowMeshFilter = sculpture.transform.GetChild(0).GetComponent<MeshFilter>();
             if (meshFilter != null)
             {
                 // Randomly select a sculpture mesh
-                meshFilter.mesh = sculptureMeshes[UnityEngine.Random.Range(0, sculptureMeshes.Length)];
+                var randomSculptureMesh = sculptureMeshes[UnityEngine.Random.Range(0, sculptureMeshes.Length)];
+                meshFilter.mesh = randomSculptureMesh;
+                glowMeshFilter.mesh = randomSculptureMesh;
+
             }
         }
 
