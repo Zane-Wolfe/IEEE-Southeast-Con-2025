@@ -448,7 +448,7 @@ MonoBehaviour:
   speed: 2
   carMoving: 0
   cameraController: {fileID: 1415622120}
-  lineOffset: {x: 0, y: 6, z: 0}
+  lineOffset: {x: 0, y: 4, z: 0}
   playerController: {fileID: 535603909}
 --- !u!1 &436232304
 GameObject:
