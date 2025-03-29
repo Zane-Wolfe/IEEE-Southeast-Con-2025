@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
-public class CarHandler : MonoBehaviour
+public class CarHandler : MonoBehaviour, IInteractable
 {
     [SerializeField] private Transform posTop;
     [SerializeField] private Transform posBottom;
@@ -15,22 +16,25 @@ public class CarHandler : MonoBehaviour
 
     [SerializeField] private CameraController cameraController;
     private LineRenderer cableLineRender;
+    [SerializeField] private Vector3 lineOffset;
+
+    [SerializeField] private Transform carDoor;
+    private Animator doorAnimatorController;
 
     void Start()
     {
         this.cableLineRender = GetComponent<LineRenderer>();
         // Car starts at the bottom of the moutain
         goingUp = true;
-        cableLineRender.SetPosition(0, posBottom.position);
-        cableLineRender.SetPosition(1, posTop.position);
-
+        this.doorAnimatorController = carDoor.GetComponent<Animator>();
     }
 
     // Move to the target end position.
     void Update()
     {
-        
-        if(carMoving)
+        cableLineRender.SetPosition(0, posBottom.position + lineOffset);
+        cableLineRender.SetPosition(1, posTop.position + lineOffset);
+        if (carMoving)
         {
             Transform startPos = posBottom;
             Transform endPos = posTop;
@@ -62,6 +66,10 @@ public class CarHandler : MonoBehaviour
                 playerController.freezePlayer = false;
                 playerController.transform.parent = null;
                 cameraController.setTarget(playerController.transform);
+
+                // Animate the door opening
+                Debug.Log("Car has stopped moving");
+                this.doorAnimatorController.SetTrigger("OpenDoor");
             }
         }
     }
@@ -75,6 +83,9 @@ public class CarHandler : MonoBehaviour
 
         // Calculate the journey length.
         journeyLength = Vector3.Distance(posBottom.position, posTop.position);
+
+        // Animate the door closing
+        this.doorAnimatorController.SetTrigger("CloseDoor");
     }
 
     public bool isCarMoving()
@@ -84,16 +95,13 @@ public class CarHandler : MonoBehaviour
 
     [SerializeField] private PlayerController playerController;
 
-    private void OnTriggerEnter(Collider other)
+    // Press Button
+    public void Interact()
     {
-        // Start moving when player boards
-        if (!other.gameObject.tag.Equals("Player")) return;
         playerController.freezePlayer = true;
         playerController.transform.parent = this.transform;
         cameraController.setTarget(this.transform);
 
         startCarMoving();
     }
-
-
 }

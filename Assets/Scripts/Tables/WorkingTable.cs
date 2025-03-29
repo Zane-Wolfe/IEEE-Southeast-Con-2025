@@ -9,8 +9,16 @@ public class WorkingTable : BaseTable
     [SerializeField] private GameData gameData;
     [SerializeField] private Mesh[] sculptureMeshes; // Array of possible sculpture meshes
     [SerializeField] private PlayerInteractHandler playerInteractHandler;
+    [SerializeField] private AudioClip[] effortSounds; // Array of effort sound effects
+    private AudioSource audioSource;
     private int hitCount = 0;
     private const int HITS_REQUIRED = 5;
+
+    void Start()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+    }
 
     /// <summary>
     /// Overrides the Interact method to handle the sculpture conversion
@@ -24,6 +32,13 @@ public class WorkingTable : BaseTable
         {
             hitCount++;
             Debug.Log($"Hit {hitCount}/{HITS_REQUIRED}");
+
+            // Play a random effort sound effect
+            if (effortSounds != null && effortSounds.Length > 0)
+            {
+                AudioClip randomSound = effortSounds[UnityEngine.Random.Range(0, effortSounds.Length)];
+                audioSource.PlayOneShot(randomSound);
+            }
 
             if (hitCount >= HITS_REQUIRED)
             {
@@ -57,13 +72,27 @@ public class WorkingTable : BaseTable
     /// <param name="ice">The Ice object to transform.</param>
     private void TransformIceToSculpture(Ice ice)
     {
+        if (ice == null)
+        {
+            Debug.LogError("Attempted to transform null ice object");
+            return;
+        }
+
         Debug.Log("Transforming Ice to Sculpture");
         
         // Remove the ice from the melt manager before destroying it
-        IceMeltManager.Instance.RemoveIce(ice);
+        if (IceMeltManager.Instance != null)
+        {
+            IceMeltManager.Instance.RemoveIce(ice);
+        }
         
         // Remove the Ice component and add the Sculpture component
         Sculpture sculpture = (Sculpture)ice.gameObject.AddComponent(typeof(Sculpture));
+        if (sculpture == null)
+        {
+            Debug.LogError("Failed to add Sculpture component");
+            return;
+        }
 
         // Copy all properties from the original ice
         sculpture.CopyFromIce(ice);
@@ -71,7 +100,10 @@ public class WorkingTable : BaseTable
         Destroy(ice);
 
         // Add the sculpture back to the melt manager
-        IceMeltManager.Instance.AddIce(sculpture);
+        if (IceMeltManager.Instance != null)
+        {
+            IceMeltManager.Instance.AddIce(sculpture);
+        }
 
         // Swap the mesh if we have sculpture meshes available
         if (sculptureMeshes != null && sculptureMeshes.Length > 0)
@@ -80,17 +112,41 @@ public class WorkingTable : BaseTable
             if (meshFilter != null)
             {
                 // Randomly select a sculpture mesh
-                meshFilter.mesh = sculptureMeshes[UnityEngine.Random.Range(0, sculptureMeshes.Length)];
+                var randomSculptureMesh = sculptureMeshes[UnityEngine.Random.Range(0, sculptureMeshes.Length)];
+                meshFilter.mesh = randomSculptureMesh;
+
+                // Try to update the glow mesh if it exists
+                if (sculpture.transform.childCount > 0)
+                {
+                    MeshFilter glowMeshFilter = sculpture.transform.GetChild(0).GetComponent<MeshFilter>();
+                    if (glowMeshFilter != null)
+                    {
+                        glowMeshFilter.mesh = randomSculptureMesh;
+                    }
+                }
             }
+            else
+            {
+                Debug.LogWarning("MeshFilter component missing from sculpture object");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No sculpture meshes available for transformation");
         }
 
         sculpture.IsLockedOnTable = false;
-        playerInteractHandler.AddInteractableObject(sculpture.gameObject);
+        if (playerInteractHandler != null)
+        {
+            playerInteractHandler.AddInteractableObject(sculpture.gameObject);
+        }
+        else
+        {
+            Debug.LogWarning("PlayerInteractHandler reference is missing on WorkingTable");
+        }
 
         // TODO: Add particle effect
-
         // TODO: Add sound effect
-
         // TODO: Record the chisel quality
     }
 
@@ -111,7 +167,7 @@ public class WorkingTable : BaseTable
     /// <returns>True if the table is empty and can accept the Ice object, false otherwise.</returns>
     public override bool CanPlaceIce(Ice ice)
     {
-        if (playerController.GetHeldItem() == ice.gameObject) 
+        if (playerController != null && playerController.GetHeldItem() == ice.gameObject) 
         {
             return false;
         }
