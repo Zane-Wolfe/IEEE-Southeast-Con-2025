@@ -94,6 +94,10 @@ public class PlayerInteractHandler : MonoBehaviour
         // Ignore if game object doesn't implment interface IInteractable
         if (other.gameObject.GetComponent<IInteractable>() == null) return;
 
+        // Ignore if its a sculpture and its locked to the table
+        Ice ice = other.gameObject.GetComponent<Ice>();
+        if (ice != null && ice.IsLockedOnTable) return;
+
         interactableObjectsNearby.Add(other.gameObject);
     }
 
@@ -101,6 +105,14 @@ public class PlayerInteractHandler : MonoBehaviour
     {
         interactableObjectsNearby.Remove(other.gameObject);
 
+    }
+
+    public void AddInteractableObject(GameObject obj)
+    {
+        if (obj != null && !interactableObjectsNearby.Contains(obj))
+        {
+            interactableObjectsNearby.Add(obj);
+        }
     }
 
 }

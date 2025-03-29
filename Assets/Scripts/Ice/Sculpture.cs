@@ -7,12 +7,20 @@ public class Sculpture : Ice
     /// <summary>
     /// The quality/value multiplier of the tool used to create the sculpture.
     /// </summary>
-    private float sculptureQualityMultiplier = 1.0f;
+    public float SculptureQualityMultiplier { get; set; } = 1.0f;
     
     /// <summary>
-    /// Whether the sculpture is locked to a table.
+    /// Copies all properties from an Ice object to this sculpture.
     /// </summary>
-    private bool isLockedOnTable = false;
+    /// <param name="ice">The Ice object to copy properties from.</param>
+    public void CopyFromIce(Ice ice)
+    {
+        BaseValue = ice.BaseValue;
+        BaseSize = ice.BaseSize;
+        Size = ice.Size;
+        CurrentMeltRate = ice.CurrentMeltRate;
+        ToolQualityMultiplier = ice.ToolQualityMultiplier;
+    }
 
     /// <summary>
     /// How much is this sculpture worth when sold at the shop?
@@ -26,21 +34,24 @@ public class Sculpture : Ice
     public override int GetSellValue()
     {
         // Calculate value based on all multipliers
-        return Mathf.RoundToInt(baseValue * size * toolQualityMultiplier * sculptureQualityMultiplier);
+        return Mathf.RoundToInt(BaseValue * Size * ToolQualityMultiplier * SculptureQualityMultiplier);
     }
 
-    public void Interact()
+    /// <summary>
+    /// Unlocks the sculpture from the table.
+    /// </summary>
+    public void UnlockFromTable()
     {
-        throw new System.NotImplementedException();
+        IsLockedOnTable = false;
     }
 
-    public void Pickup()
+    public override void Interact()
     {
-        if(isLockedOnTable)
-        {
-            // Cannot pick up if locked to table
-            return;
-        }
-        throw new System.NotImplementedException();
+        // Do nothing, Pickup() handles this logic 
+    }
+
+    public override void Pickup()
+    {
+        // Do nothing, Interact() handles this logic
     }
 }

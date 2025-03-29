@@ -12,6 +12,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private int throwForce = 5;
 
+    public GameObject GetHeldItem()
+    {
+        return heldItem;
+    }
+
     private void Start()
     {
         controller = gameObject.GetComponent<CharacterController>();
@@ -19,8 +24,6 @@ public class PlayerController : MonoBehaviour
         mainCamera = Camera.main;
         freezePlayer = false;
     }
-
-    
 
     void Update()
     {
@@ -36,6 +39,10 @@ public class PlayerController : MonoBehaviour
             heldItem.transform.position = heldItemPos;
             heldItem.transform.rotation = heldItemRot;
             heldRigidbody.isKinematic = true;
+            // Prevent the held item from affecting the player's physics
+            heldRigidbody.interpolation = RigidbodyInterpolation.Interpolate;
+            heldRigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
+            heldRigidbody.constraints = RigidbodyConstraints.FreezeAll;
         }
     }
 
@@ -47,7 +54,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float jumpHeight = 1.0f;
     private float gravityValue = -9.81f;
     
-
     private void HandleMovementReal()
     {
         if (freezePlayer) return;
@@ -76,7 +82,6 @@ public class PlayerController : MonoBehaviour
     public void HandleInteract(GameObject interactedObject)
     {
         interactedObject.GetComponent<IInteractable>().Interact();
-
         //Debug.Log("Interacted with " + interactedObject.name);
         if(interactedObject.GetComponent<IPickupable>() != null)
         {
@@ -93,6 +98,10 @@ public class PlayerController : MonoBehaviour
                 //heldItem.transform.position = dropItemPos;
                 Rigidbody heldRigidbody = heldItem.GetComponent<Rigidbody>();
                 heldRigidbody.isKinematic = false;
+                // Reset physics settings when dropped
+                heldRigidbody.interpolation = RigidbodyInterpolation.None;
+                heldRigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
+                heldRigidbody.constraints = RigidbodyConstraints.None;
                 heldRigidbody.AddForce(transform.forward * throwForce, ForceMode.Impulse);
                 heldItem = null;
             }else {
@@ -101,7 +110,6 @@ public class PlayerController : MonoBehaviour
             }
         }
         // Other interactions here
-
     }
 
     Vector3 GetMouseDir() {
@@ -119,5 +127,4 @@ public class PlayerController : MonoBehaviour
         }
         return Vector3.zero;
     }
-
 }
