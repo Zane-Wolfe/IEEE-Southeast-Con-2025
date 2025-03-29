@@ -13,8 +13,8 @@ public class NPCBehavior : MonoBehaviour
 
     private float minWalkTime = 1;
     private float maxWalkTime = 3;
-    private float minDelay = 1;
-    private float maxDelay = 3;
+    private float minDelay = 0.5f;
+    private float maxDelay = 5;
 
     // Start is called before the first frame update
     void Start()
