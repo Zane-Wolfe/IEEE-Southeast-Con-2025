@@ -38,7 +38,7 @@ public class PlayerInteractHandler : MonoBehaviour
             // SELECT ITEM SHADER HERE @CC
             closestInteractableItem.transform.GetChild(0).gameObject.SetActive(true);
             if (closestInteractableItem.tag == "Ice") {
-                closestInteractableItem.GetComponent<MeshRenderer>().material.SetFloat("_Refract", 0.8f);
+                closestInteractableItem.GetComponent<MeshRenderer>().material.SetFloat("_Refract", 0.38f);
             }
         }
 
