@@ -531,6 +531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactableObjectsNearby: []
+  dataPanel: {fileID: 1583926736}
 --- !u!54 &436232308
 Rigidbody:
   m_ObjectHideFlags: 0

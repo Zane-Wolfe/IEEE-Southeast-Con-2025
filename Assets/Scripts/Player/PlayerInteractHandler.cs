@@ -12,7 +12,8 @@ public class PlayerInteractHandler : MonoBehaviour
     private GameObject closestInteractableItem;
     private bool showLabel = false;
     private string labelText = "";
-    private Rect labelRect = new Rect(0, 0, 100, 50);
+    //private Rect labelRect = new Rect(0, 0, 100, 50);
+    [SerializeField] private RectTransform dataPanel;
 
     void Start()
     {
@@ -43,17 +44,45 @@ public class PlayerInteractHandler : MonoBehaviour
             // SELECT ITEM SHADER HERE @CC
             if (closestInteractableItem.transform.childCount > 0)
             {
-                closestInteractableItem.transform.GetChild(0).gameObject.SetActive(true);
-
-                Vector3 screenPos = Camera.main.WorldToScreenPoint(closestInteractableItem.transform.position);
-                labelRect.x = screenPos.x - 10;
-                labelRect.y = screenPos.y + 175;
-                Ice c = closestInteractableItem.GetComponent<Ice>();
-                if (c != null) {
-                    labelText = "MeltRate: " + c.CurrentMeltRate.ToString() + "\nSize: " + c.Size; 
+                if(closestInteractableItem == playerController.GetHeldItem())
+                {
+                    closestInteractableItem.transform.GetChild(0).gameObject.SetActive(false);
+                    if (closestInteractableItem.tag == "Ice")
+                    {
+                        closestInteractableItem.GetComponent<MeshRenderer>().material.SetFloat("_Refract", 0.05f);
+                    }
+                }
+                else
+                {
+                    closestInteractableItem.transform.GetChild(0).gameObject.SetActive(true);
+                    if (closestInteractableItem.tag == "Ice")
+                    {
+                        closestInteractableItem.GetComponent<MeshRenderer>().material.SetFloat("_Refract", 0.38f);
+                    }
                 }
 
-                showLabel = true;
+                Vector3 screenPos = Camera.main.WorldToScreenPoint(closestInteractableItem.transform.position);
+                screenPos.y += 80;
+                dataPanel.position = screenPos;
+
+                Ice iceC = closestInteractableItem.GetComponent<Ice>();
+                Sculpture sulptureC = closestInteractableItem.GetComponent<Sculpture>();
+                // Display Ice Info
+                if (iceC != null) {
+                    labelText = "MeltRate: " + iceC.CurrentMeltRate.ToString() + "\nSize: " + iceC.Size;
+                    showLabel = true;
+                }
+                // Display scuplter info
+                if (sulptureC != null)
+                {
+                    labelText = "MeltRate: " + sulptureC.CurrentMeltRate.ToString() + "\nSize: " + sulptureC.Size;
+                    showLabel = true;
+                }
+
+                if (playerController.GetHeldItem() == closestInteractableItem)
+                {
+                    showLabel = false;
+                }
             }
             if (closestInteractableItem.tag == "Ice") {
                 closestInteractableItem.GetComponent<MeshRenderer>().material.SetFloat("_Refract", 0.38f);
@@ -137,7 +166,12 @@ public class PlayerInteractHandler : MonoBehaviour
     {
         if (showLabel)
         {
-            GUI.Label(labelRect, labelText);
+            dataPanel.gameObject.SetActive(true);
+            //GUI.Label(labelRect, labelText);
+        }
+        else
+        {
+            dataPanel.gameObject.SetActive(false);
         }
     }
 
