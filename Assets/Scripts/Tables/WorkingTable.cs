@@ -29,24 +29,24 @@ public class WorkingTable : BaseTable
         Debug.Log("Interacting with Working Table");
         Ice currentIce = GetCurrentIce();
         if (currentIce != null && !(currentIce is Sculpture))
-        {
-            hitCount++;
-            Debug.Log($"Hit {hitCount}/{HITS_REQUIRED}");
-
-            // Play a random effort sound effect
-            if (effortSounds != null && effortSounds.Length > 0)
             {
-                AudioClip randomSound = effortSounds[UnityEngine.Random.Range(0, effortSounds.Length)];
-                audioSource.PlayOneShot(randomSound);
-            }
+                hitCount++;
+                Debug.Log($"Hit {hitCount}/{HITS_REQUIRED}");
 
-            if (hitCount >= HITS_REQUIRED)
-            {
-                TransformIceToSculpture(currentIce);
-                hitCount = 0;
+                // Play a random effort sound effect
+                if (effortSounds != null && effortSounds.Length > 0)
+                {
+                    AudioClip randomSound = effortSounds[UnityEngine.Random.Range(0, effortSounds.Length)];
+                    audioSource.PlayOneShot(randomSound);
+                }
+
+                if (hitCount >= HITS_REQUIRED)
+                {
+                    TransformIceToSculpture(currentIce);
+                    hitCount = 0;
+                }
             }
         }
-    }
 
     /// <summary>
     /// Overrides the RemoveIce method to ensure ice can only be removed after it has been hit 5 times.
@@ -55,13 +55,13 @@ public class WorkingTable : BaseTable
     public override Ice RemoveIce()
     {
         if (currentIce != null && hitCount >= HITS_REQUIRED)
-        {
-            Ice iceToReturn = currentIce;
-            currentIce = null;
-            hitCount = 0; // Reset hit count
-            iceToReturn.transform.SetParent(null);
-            return iceToReturn;
-        }
+            {
+                Ice iceToReturn = currentIce;
+                currentIce = null;
+                hitCount = 0; // Reset hit count
+                iceToReturn.transform.SetParent(null);
+                return iceToReturn;
+            }
         return null;
     }
 
@@ -136,6 +136,11 @@ public class WorkingTable : BaseTable
         }
 
         sculpture.IsLockedOnTable = false;
+        
+        // Clean up the table's state
+        currentIce = null;
+        sculpture.transform.SetParent(null);
+        
         if (playerInteractHandler != null)
         {
             playerInteractHandler.AddInteractableObject(sculpture.gameObject);
@@ -172,5 +177,39 @@ public class WorkingTable : BaseTable
             return false;
         }
         return currentIce == null && hitCount == 0;
+    }
+
+    /// <summary>
+    /// Overrides PlaceIce to prevent sculptures from being locked when placed back on the table.
+    /// </summary>
+    public override void PlaceIce(Ice ice)
+    {
+        if (CanPlaceIce(ice))
+        {
+            Rigidbody rb = ice.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.velocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+                rb.isKinematic = true;
+            }
+            
+            currentIce = ice;
+            ice.transform.SetParent(transform.parent);
+            ice.transform.position = snapPoint.position;
+            ice.transform.rotation = snapPoint.rotation;
+            
+            // Only lock if it's not a sculpture
+            if (!(ice is Sculpture))
+            {
+                ice.IsLockedOnTable = true;
+            }
+            else
+            {
+                ice.IsLockedOnTable = false;
+                ice.transform.SetParent(null);
+                currentIce = null;
+            }
+        }
     }
 } 
