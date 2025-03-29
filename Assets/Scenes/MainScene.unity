@@ -1784,6 +1784,51 @@ PrefabInstance:
       propertyPath: playerInteractHandler
       value: 
       objectReference: {fileID: 436232307}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: fcd2d9388e67b40729e4507b36dd1ca7, type: 3}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 97af573ba651b4fa1a31fe29bdadc222, type: 3}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: f363dad26d45048edb2314d96b15cb55, type: 3}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: e9425c959f3a845729588374ade69430, type: 3}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 923c8bcbf80ca47d7a97a31e9b0836d6, type: 3}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 7128aeafb99c7402798fc06c74ddd81b, type: 3}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: 31ea3f3464aa04dcd9c797a990a92b32, type: 3}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[7]
+      value: 
+      objectReference: {fileID: 8300000, guid: f2750029a91234c1898f8e0410439470, type: 3}
     - target: {fileID: 5709200711890092551, guid: 120c51ed943494c2b9bf7a112539fe06,
         type: 3}
       propertyPath: m_LocalPosition.x
