@@ -9,6 +9,9 @@ public class GameData : ScriptableObject
 
     public float volume = 0;
 
+    public int hour = 8;
+    public int minute = 0;
+    
     // Upgrades System
     // Constants
     public int walkingSpeed = -1;

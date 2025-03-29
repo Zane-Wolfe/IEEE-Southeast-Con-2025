@@ -49,7 +49,6 @@ public class NPCBehavior : MonoBehaviour
             gameObject.transform.position = Vector3.Lerp(initialPos, targetPos, Time.time - startTime);
             yield return 1;
         }
-        Debug.Log("Finished");
         StartCoroutine(WaitAndMove());
     }
 

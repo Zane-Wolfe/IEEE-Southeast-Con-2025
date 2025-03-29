@@ -1,12 +1,14 @@
 using UnityEngine;
 using System.Collections;
 
+
 /// <summary>
 /// A table that can sell Ice and Sculpture objects, adding their sell value to the player's money after a delay.
 /// </summary>
 public class SellingTable : BaseTable
 {
     [SerializeField] private GameData gameData;
+    [SerializeField] private MarketValueHandler marketValueHandler;
     [SerializeField] private float minSellDelay = 1f;
     [SerializeField] private float maxSellDelay = 3f;
     private Coroutine sellCoroutine;
@@ -65,8 +67,20 @@ public class SellingTable : BaseTable
         Ice currentIce = GetCurrentIce();
         if (currentIce != null)
         {
-            int sellValue = currentIce.GetSellValue();
-            gameData.playerMoney += sellValue;
+            int baseSellValue = currentIce.GetSellValue();
+            int finalSellValue = baseSellValue;
+
+            // Apply market multiplier if the object is a sculpture
+            if (currentIce is Sculpture sculpture)
+            {
+                float multiplier = MarketValueHandler.Instance.GetMultiplier(sculpture.Type);
+                finalSellValue = Mathf.RoundToInt(baseSellValue * multiplier);
+                
+                // Notify MarketValueHandler about the sale
+                MarketValueHandler.Instance.OnSculptureSold(sculpture.Type);
+            }
+
+            gameData.playerMoney += finalSellValue;
             
             RemoveIce();
             Destroy(currentIce.gameObject);
