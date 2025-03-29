@@ -72,13 +72,13 @@ public class PlayerInteractHandler : MonoBehaviour
                 if (iceC != null) {
                     Debug.Log(iceC.Size);
                     int percentleft = Mathf.RoundToInt((iceC.Size / iceC.BaseSize) * 100);
-                    labelText.text =  "Ice Left: " + percentleft + "%";
+                    //labelText.text =  "Ice Left: " + percentleft + "%";
                     showLabel = true;
                 }
                 // Display scuplter info
                 if (sulptureC != null)
                 {
-                    labelText.text = "MeltRate: " + sulptureC.CurrentMeltRate.ToString() + "\nSize: " + sulptureC.Size;
+                    //labelText.text = "MeltRate: " + sulptureC.CurrentMeltRate.ToString() + "\nSize: " + sulptureC.Size;
                     showLabel = true;
                 }
 
