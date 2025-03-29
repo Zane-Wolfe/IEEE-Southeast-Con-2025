@@ -1064,6 +1064,7 @@ MonoBehaviour:
   cameraController: {fileID: 1415622120}
   lineOffset: {x: 0, y: 4, z: 0}
   carDoor: {fileID: 128437978}
+  gameData: {fileID: 11400000, guid: 9218d0cf3c7d4084dbbd34d8d48c3d84, type: 2}
   playerController: {fileID: 535603909}
 --- !u!1 &436232304
 GameObject:

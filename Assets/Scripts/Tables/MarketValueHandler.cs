@@ -7,12 +7,15 @@ public class MarketValueHandler : MonoBehaviour
     public static MarketValueHandler Instance { get; private set; }
 
     private Dictionary<int, float> marketMultipliers = new Dictionary<int, float>();
-    private System.Random random = new System.Random();
+    private Dictionary<int, List<float>> marketMultipliersHistory = new Dictionary<int, List<float>>();
     private const float MIN_MULTIPLIER = 0.2f;
     private const float MAX_MULTIPLIER = 1.8f;
     private const float SALE_REDUCTION = 0.10f;
     private const int MARKET_OPEN_HOUR = 9;
     private const int MARKET_CLOSE_HOUR = 17;
+    [SerializeField] private nighty ingameTime;
+    [SerializeField] private PlayerController playerController;
+    private int lastUpdatedHour = -1;
 
     private void Awake()
     {
@@ -29,34 +32,73 @@ public class MarketValueHandler : MonoBehaviour
 
     private void Start()
     {
+        lastUpdatedHour = -1;
+        List<float> marketHistoryZero = new List<float>();
+        for(int i = 0; i < 24; i++)
+        {
+            marketHistoryZero.Add(0);
+        }
         // Initialize multipliers for each sculpture type
         for (int i = 0; i < 6; i++)
         {
             marketMultipliers[i] = 1.0f;
+            marketMultipliersHistory[i] = marketHistoryZero;
         }
-
-        // Start the hourly update coroutine
-        StartCoroutine(UpdateMarketValues());
     }
 
-    private System.Collections.IEnumerator UpdateMarketValues()
+    private void Update()
     {
-        while (true)
+        if (IsMarketOpen() && ingameTime.getCurrentHourOfDay() != lastUpdatedHour)
         {
-            // Wait for 1 hour in game time
-            yield return new WaitForSeconds(3600f); // Assuming 1 hour = 3600 seconds in game time
-
-            // Check if market is open
-            if (IsMarketOpen())
-            {
-                UpdateAllMultipliers();
-            }
+            lastUpdatedHour = ingameTime.getCurrentHourOfDay();
+            UpdateAllMultipliers();
         }
+        // Show at 5pm
+        if (ingameTime.getCurrentHourOfDay() == 17)
+        {
+            displayGraphs();
+        }
+    }
+
+    [SerializeField] RectTransform stockPanel;
+    // There are 6 of these
+    [SerializeField] List<RectTransform> stocks;
+    [SerializeField] GameObject currentStatue;
+    
+    private void displayGraphs()
+    {
+        playerController.freezePlayer = true;
+        stockPanel.gameObject.SetActive(true);
+        stocks[0].gameObject.SetActive(true);
+        // SET STATUE HERE
+        // currentStatue = 
+    }
+    int currentStockViewing = 0;
+    public void clickNextStock()
+    {
+        
+        stocks[currentStockViewing].gameObject.SetActive(false);
+        currentStockViewing++;
+        // Close Stock menu
+        if(currentStockViewing == 6)
+        {
+            stockPanel.gameObject.SetActive(false);
+            playerController.freezePlayer = false;
+            currentStockViewing = 0;
+            return;
+        }
+        LineRendererHUD lrh = stocks[currentStockViewing].gameObject.GetComponent<LineRendererHUD>();
+        lrh.setGraphData(marketMultipliersHistory[currentStockViewing]);
+
+        stocks[currentStockViewing].gameObject.SetActive(true);
+        // SET NEXT STATUE HERE
+        // currentStatue = 
+
     }
 
     private bool IsMarketOpen()
     {
-        int currentHour = DateTime.Now.Hour;
+        int currentHour = ingameTime.getCurrentHourOfDay();
         return currentHour >= MARKET_OPEN_HOUR && currentHour < MARKET_CLOSE_HOUR;
     }
 
@@ -64,8 +106,11 @@ public class MarketValueHandler : MonoBehaviour
     {
         for (int i = 0; i < 6; i++)
         {
-            float newMultiplier = (float)(random.NextDouble() * (MAX_MULTIPLIER - MIN_MULTIPLIER) + MIN_MULTIPLIER);
+            float newMultiplier = (float)(UnityEngine.Random.Range(0, 2) * (MAX_MULTIPLIER - MIN_MULTIPLIER) + MIN_MULTIPLIER);
             marketMultipliers[i] = newMultiplier;
+
+            marketMultipliersHistory[i].RemoveAt(0);
+            marketMultipliersHistory[i].Add(newMultiplier);
         }
     }
 

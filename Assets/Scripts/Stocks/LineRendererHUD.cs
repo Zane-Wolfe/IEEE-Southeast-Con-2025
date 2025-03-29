@@ -15,28 +15,27 @@ public class LineRendererHUD : Graphic
     float unitWidth;
     float unitHeight;
 
-    public bool generatedData = false;
-
     [SerializeField] float scalarX = 0.0010f;
     [SerializeField] float scalarY = 0.0012f;
-    void GeneratePoints()
+    
+
+
+    private float Remap(float value, float from1, float to1, float from2, float to2)
     {
+        return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+    }
+    public void setGraphData(List<float> data)
+    {
+        points.Clear();
         float spacing = 10f;
-        float halfWidth = 480f /2;
-        float halfHeight = 640f /2;
+        float halfWidth = 480f / 2;
         for (int i = 0; i < 24; i++)
         {
             float x = (i * spacing) - halfWidth;
-            float y = Random.Range(-halfHeight, halfHeight);
-            Vector2 newPoint = new Vector2(x*scalarX, y*scalarY);
+            float y = Remap(data[i], 0.2f, 1.8f, -320, 320f);
+            Vector2 newPoint = new Vector2(x * scalarX, y * scalarY);
             Debug.Log(newPoint);
             points.Add(newPoint);
-            
-
-            // Instantiate and place points on the panel
-            //GameObject point = Instantiate(pointPrefab, panel);
-            //point.GetComponent<RectTransform>().anchoredPosition = new Vector2(x, y);
-
         }
     }
 
@@ -44,12 +43,6 @@ public class LineRendererHUD : Graphic
     protected override void OnPopulateMesh(VertexHelper vh)
     {
         vh.Clear();
-
-        if(!generatedData) { 
-            generatedData = true;
-            points.Clear();
-            GeneratePoints();
-        }
 
         width = rectTransform.rect.width;
         height = rectTransform.rect.height;

@@ -15,7 +15,7 @@ MonoBehaviour:
   playerMoney: 99999
   volume: 0
   hour: 1
-  minute: 58
+  minute: 34
   walkingSpeed: -1
   carSpeed: -1
   pickQuality: -1
