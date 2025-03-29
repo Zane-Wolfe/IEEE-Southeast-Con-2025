@@ -21,10 +21,6 @@ using UnityEngine;
         int hour = (int)(elapsed_hours);
         int min = (int)(minutes);
 
-        Vector3 forwardVector = transform.localEulerAngles.x * Vector3.forward;
-        float radianAngle = Mathf.Atan2(forwardVector.z, forwardVector.x);
-        float degreeAngle = radianAngle * Mathf.Rad2Deg;
-        Debug.Log(degreeAngle);
         gameData.minute = min;
         gameData.hour = hour;
     }
