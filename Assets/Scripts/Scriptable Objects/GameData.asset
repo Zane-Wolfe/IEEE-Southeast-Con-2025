@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: GameData
   m_EditorClassIdentifier: 
   playerMoney: 99999
+  volume: 0
   walkingSpeed: -1
   carSpeed: -1
   pickQuality: -1
