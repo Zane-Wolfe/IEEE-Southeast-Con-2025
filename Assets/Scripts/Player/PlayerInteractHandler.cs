@@ -27,7 +27,10 @@ public class PlayerInteractHandler : MonoBehaviour
             //
             //  DESELECT ITEM SHADER HERE @CC
             //
-            closestInteractableItem.transform.GetChild(0).gameObject.SetActive(false);
+            if (closestInteractableItem.transform.childCount > 0)
+            {
+                closestInteractableItem.transform.GetChild(0).gameObject.SetActive(false);
+            }
             if (closestInteractableItem.tag == "Ice") {
                 closestInteractableItem.GetComponent<MeshRenderer>().material.SetFloat("_Refract", 0.05f);
             }
@@ -36,9 +39,12 @@ public class PlayerInteractHandler : MonoBehaviour
         if (closestInteractableItem != null)
         {
             // SELECT ITEM SHADER HERE @CC
-            closestInteractableItem.transform.GetChild(0).gameObject.SetActive(true);
+            if (closestInteractableItem.transform.childCount > 0)
+            {
+                closestInteractableItem.transform.GetChild(0).gameObject.SetActive(true);
+            }
             if (closestInteractableItem.tag == "Ice") {
-                closestInteractableItem.GetComponent<MeshRenderer>().material.SetFloat("_Refract", 0.8f);
+                closestInteractableItem.GetComponent<MeshRenderer>().material.SetFloat("_Refract", 0.38f);
             }
         }
 
@@ -94,6 +100,10 @@ public class PlayerInteractHandler : MonoBehaviour
         // Ignore if game object doesn't implment interface IInteractable
         if (other.gameObject.GetComponent<IInteractable>() == null) return;
 
+        // Ignore if its a sculpture and its locked to the table
+        Ice ice = other.gameObject.GetComponent<Ice>();
+        if (ice != null && ice.IsLockedOnTable) return;
+
         interactableObjectsNearby.Add(other.gameObject);
     }
 
@@ -101,6 +111,14 @@ public class PlayerInteractHandler : MonoBehaviour
     {
         interactableObjectsNearby.Remove(other.gameObject);
 
+    }
+
+    public void AddInteractableObject(GameObject obj)
+    {
+        if (obj != null && !interactableObjectsNearby.Contains(obj))
+        {
+            interactableObjectsNearby.Add(obj);
+        }
     }
 
 }

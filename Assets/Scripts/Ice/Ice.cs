@@ -7,35 +7,41 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
     /// <summary>
     /// The base quality/value of the ice, determined by its source location.
     /// </summary>
-    protected int baseValue;
+    public int BaseValue { get; set; }
 
     /// <summary>
     /// The initial size of the ice when created.
     /// Values typically range from 0.8 to 1.2
     /// </summary>
-    protected float baseSize;
+    public float BaseSize { get; set; }
 
     /// <summary>
     /// The current size multiplier of the ice, affected by melting.
     /// Values range from 1.0 (full size) to 0.0 (fully melted).
     /// </summary>
-    protected float size;
+    public float Size { get; set; }
 
     /// <summary>
     /// The rate at which the size multiplier decreases per second due to melting.
     /// A value of 0.0f means the ice is not currently melting.
     /// </summary>
-    protected float currentMeltRate = 0.10f;
+    public float CurrentMeltRate { get; set; } = 0.01f;
 
     /// <summary>
     /// The quality/value multiplier of the tool used to create the ice.
     /// </summary>
-    protected float toolQualityMultiplier = 1.0f;
+    public float ToolQualityMultiplier { get; set; } = 1.0f;
 
     /// <summary>
     /// The MeshFilter component attached to the ice object.
     /// </summary>
-    protected MeshFilter meshFilter;
+    private MeshFilter meshFilter;
+
+    /// <summary>
+    /// Whether the ice is locked to a table.
+    /// </summary>
+    public bool IsLockedOnTable { get; set; } = false;
+
 
     /// <summary>
     /// Creates the ice object with a specified base value and size.
@@ -44,9 +50,9 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
     /// <param name="size">The initial size/scale of the ice.</param>
     public void CreateIce(int value, float size) 
     {
-        baseValue = value;
-        baseSize = size;
-        this.size = size;
+        BaseValue = value;
+        BaseSize = size;
+        Size = size;
         UpdateMeshScale();
     }
 
@@ -72,7 +78,7 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
     void Update()
     {
         // Update the mesh scale if melting
-        if (currentMeltRate > 0)
+        if (CurrentMeltRate > 0)
         {
             UpdateMeshScale();
         }
@@ -85,16 +91,16 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
     {
         if (meshFilter != null)
         {
-            transform.localScale = Vector3.one * size;
+            transform.localScale = Vector3.one * Size;
         }
     }
 
     /// <summary>
-    /// Melts the ice object by its currentMeltRate normalized by deltaTime
+    /// Melts the ice object by its CurrentMeltRate normalized by deltaTime
     /// </summary>
     public void Melt(float deltaTime)
     {
-        size = size - (currentMeltRate * deltaTime);
+        Size = Size - (CurrentMeltRate * deltaTime);
         UpdateMeshScale();
     }
 
@@ -104,7 +110,7 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
     /// <param name="rate"></param>
     public void SetMeltRate(float rate)
     {
-        currentMeltRate = rate;
+        CurrentMeltRate = rate;
     }
 
     /// <summary>
@@ -113,26 +119,26 @@ public class Ice : MonoBehaviour, IInteractable, IPickupable
     /// <returns></returns>
     public bool IsMelted()
     {
-        return size <= 0.0f;
+        return Size <= 0.0f;
     }
 
     /// <summary>
     /// How much is this worth when sold at the shop?
-    /// Base implementation calculates value based on baseValue and current size
+    /// Base implementation calculates value based on BaseValue and current size
     /// </summary>
     /// <returns>The calculated sell value</returns>
     public virtual int GetSellValue()
     {
         // melting ice will reduce its value
-        return Mathf.RoundToInt(baseValue * size);
+        return Mathf.RoundToInt(BaseValue * Size);
     }
 
-    public void Interact()
+    public virtual void Interact()
     {
         // Do nothing, Pickup() handles this logic 
     }
 
-    public void Pickup()
+    public virtual void Pickup()
     {
         // Run any logic here when picked up
         Debug.Log("Ice picked up");

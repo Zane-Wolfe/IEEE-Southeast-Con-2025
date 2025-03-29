@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarHandler : MonoBehaviour
+public class CarHandler : MonoBehaviour, IInteractable
 {
     [SerializeField] private Transform posTop;
     [SerializeField] private Transform posBottom;
@@ -15,22 +15,23 @@ public class CarHandler : MonoBehaviour
 
     [SerializeField] private CameraController cameraController;
     private LineRenderer cableLineRender;
+    [SerializeField] private Vector3 lineOffset;
 
     void Start()
     {
         this.cableLineRender = GetComponent<LineRenderer>();
         // Car starts at the bottom of the moutain
         goingUp = true;
-        cableLineRender.SetPosition(0, posBottom.position);
-        cableLineRender.SetPosition(1, posTop.position);
+        
 
     }
 
     // Move to the target end position.
     void Update()
     {
-        
-        if(carMoving)
+        cableLineRender.SetPosition(0, posBottom.position + lineOffset);
+        cableLineRender.SetPosition(1, posTop.position + lineOffset);
+        if (carMoving)
         {
             Transform startPos = posBottom;
             Transform endPos = posTop;
@@ -84,16 +85,13 @@ public class CarHandler : MonoBehaviour
 
     [SerializeField] private PlayerController playerController;
 
-    private void OnTriggerEnter(Collider other)
+    // Press Button
+    public void Interact()
     {
-        // Start moving when player boards
-        if (!other.gameObject.tag.Equals("Player")) return;
         playerController.freezePlayer = true;
         playerController.transform.parent = this.transform;
         cameraController.setTarget(this.transform);
 
         startCarMoving();
     }
-
-
 }
