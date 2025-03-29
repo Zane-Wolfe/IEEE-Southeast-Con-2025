@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
 
 public class UpgradeTextUpdater : MonoBehaviour
@@ -9,22 +10,16 @@ public class UpgradeTextUpdater : MonoBehaviour
         WalkSpeed, CarSpeed, PickQuality, ChiselQuality
     }
     [SerializeField] GameData gameData;
-    [SerializeField] GameObject moneyTextObject;
-    [SerializeField] GameObject levelTextObject;
-    [SerializeField] GameObject buttonTextObject;
+    [SerializeField] TMP_Text moneyText;
+    [SerializeField] TMP_Text levelText;
+    [SerializeField] TMP_Text buttonText;
     [SerializeField] UpgradeType upgradeType;
     
-    private TMPro.TextMeshProUGUI moneyText;
-    private TMPro.TextMeshProUGUI levelText;
-    private TMPro.TextMeshProUGUI buttonText;
     private int currentCost = 0;
 
     // Start is called before the first frame update
     void Start() {
-        moneyText = moneyTextObject.GetComponent<TMPro.TextMeshProUGUI>();
         UpdateMoneyText();
-        levelText = levelTextObject.GetComponent<TMPro.TextMeshProUGUI>();
-        buttonText = buttonTextObject.GetComponent<TMPro.TextMeshProUGUI>();
         UpdateUpgradeText();
     }
 
@@ -34,7 +29,7 @@ public class UpgradeTextUpdater : MonoBehaviour
     }
 
     private void UpdateMoneyText() {
-        moneyText.text = "Money:\n$" + gameData.playerMoney.ToString();
+        moneyText.text = gameData.playerMoney.ToString();
     }
 
     public void IncreaseLevel() {
