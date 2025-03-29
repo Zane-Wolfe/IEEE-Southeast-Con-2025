@@ -159,7 +159,10 @@ public class WorkingTable : BaseTable
         }
 
         // TODO: Add particle effect
-        // TODO: Record the chisel quality
+
+        // Record the chisel level used to break the ice
+        GameData gameData = Resources.Load<GameData>("GameData");
+        sculpture.SculptureQualityMultiplier = gameData.chiselLevel * 1.0f;
     }
 
     /// <summary>
