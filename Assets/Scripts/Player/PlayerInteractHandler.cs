@@ -71,7 +71,7 @@ public class PlayerInteractHandler : MonoBehaviour
                 // Display Ice Info
                 if (iceC != null) {
                     Debug.Log(iceC.Size);
-                    int percentleft = Mathf.RoundToInt(iceC.Size * 100);
+                    int percentleft = Mathf.RoundToInt((iceC.Size / iceC.BaseSize) * 100);
                     labelText.text =  "Ice Left: " + percentleft + "%";
                     showLabel = true;
                 }
