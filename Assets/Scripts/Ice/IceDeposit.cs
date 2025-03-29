@@ -71,6 +71,9 @@ public class IceDeposit : MonoBehaviour, IInteractable
         }
 
         // TODO: Add particle effect
-        // TODO: Record the pick quality
+        // TODO: Record the pick level used
+        GameData gameData = Resources.Load<GameData>("GameData");
+        newIce.ToolQualityMultiplier = gameData.pickLevel * 1.0f;
+    
     }
 }
