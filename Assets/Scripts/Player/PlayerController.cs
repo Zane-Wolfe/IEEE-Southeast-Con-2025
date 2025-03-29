@@ -70,7 +70,8 @@ public class PlayerController : MonoBehaviour
         if (Vector3.Dot(dir, transform.forward) > 0)
         {
             Debug.Log("Bleh");
-            playerAnimator.SetFloat("Blend", (Vector3.SignedAngle(dir, transform.forward, Vector3.up)) * Mathf.Deg2Rad / (-0.5f * Mathf.PI));
+            transform.LookAt(GetMouseDir());
+           //playerAnimator.SetFloat("Blend", (Vector3.SignedAngle(dir, transform.forward, Vector3.up)) * Mathf.Deg2Rad / (-0.5f * Mathf.PI));
         }
         else
         {
