@@ -9,8 +9,16 @@ public class WorkingTable : BaseTable
     [SerializeField] private GameData gameData;
     [SerializeField] private Mesh[] sculptureMeshes; // Array of possible sculpture meshes
     [SerializeField] private PlayerInteractHandler playerInteractHandler;
+    [SerializeField] private AudioClip[] effortSounds; // Array of effort sound effects
+    private AudioSource audioSource;
     private int hitCount = 0;
     private const int HITS_REQUIRED = 5;
+
+    void Start()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+    }
 
     /// <summary>
     /// Overrides the Interact method to handle the sculpture conversion
@@ -24,6 +32,13 @@ public class WorkingTable : BaseTable
         {
             hitCount++;
             Debug.Log($"Hit {hitCount}/{HITS_REQUIRED}");
+
+            // Play a random effort sound effect
+            if (effortSounds != null && effortSounds.Length > 0)
+            {
+                AudioClip randomSound = effortSounds[UnityEngine.Random.Range(0, effortSounds.Length)];
+                audioSource.PlayOneShot(randomSound);
+            }
 
             if (hitCount >= HITS_REQUIRED)
             {
