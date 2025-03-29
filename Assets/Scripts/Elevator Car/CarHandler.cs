@@ -21,6 +21,8 @@ public class CarHandler : MonoBehaviour, IInteractable
     [SerializeField] private Transform carDoor;
     private Animator doorAnimatorController;
 
+    [SerializeField] GameData gameData;
+
     void Start()
     {
         this.cableLineRender = GetComponent<LineRenderer>();
@@ -86,6 +88,9 @@ public class CarHandler : MonoBehaviour, IInteractable
 
         // Animate the door closing
         this.doorAnimatorController.SetTrigger("CloseDoor");
+
+        // Decrease money
+        gameData.playerMoney -= 100;
     }
 
     public bool isCarMoving()
