@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerInteractHandler : MonoBehaviour
@@ -11,7 +12,7 @@ public class PlayerInteractHandler : MonoBehaviour
 
     private GameObject closestInteractableItem;
     private bool showLabel = false;
-    private string labelText = "";
+    [SerializeField] private TMP_Text labelText;
     //private Rect labelRect = new Rect(0, 0, 100, 50);
     [SerializeField] private RectTransform dataPanel;
 
@@ -69,13 +70,15 @@ public class PlayerInteractHandler : MonoBehaviour
                 Sculpture sulptureC = closestInteractableItem.GetComponent<Sculpture>();
                 // Display Ice Info
                 if (iceC != null) {
-                    labelText = "MeltRate: " + iceC.CurrentMeltRate.ToString() + "\nSize: " + iceC.Size;
+                    Debug.Log(iceC.Size);
+                    int percentleft = Mathf.RoundToInt(iceC.Size * 100);
+                    labelText.text =  "Ice Left: " + percentleft + "%";
                     showLabel = true;
                 }
                 // Display scuplter info
                 if (sulptureC != null)
                 {
-                    labelText = "MeltRate: " + sulptureC.CurrentMeltRate.ToString() + "\nSize: " + sulptureC.Size;
+                    labelText.text = "MeltRate: " + sulptureC.CurrentMeltRate.ToString() + "\nSize: " + sulptureC.Size;
                     showLabel = true;
                 }
 
@@ -167,7 +170,6 @@ public class PlayerInteractHandler : MonoBehaviour
         if (showLabel)
         {
             dataPanel.gameObject.SetActive(true);
-            //GUI.Label(labelRect, labelText);
         }
         else
         {
