@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class LineRendererHUD : Graphic
 {
@@ -18,17 +17,18 @@ public class LineRendererHUD : Graphic
 
     public bool generatedData = false;
 
+    [SerializeField] float scalarX = 0.0010f;
+    [SerializeField] float scalarY = 0.0012f;
     void GeneratePoints()
     {
-        float scalar = 0.0015f;
         float spacing = 10f;
         float halfWidth = 480f /2;
         float halfHeight = 640f /2;
-        for (int i = 0; i < 48; i++)
+        for (int i = 0; i < 24; i++)
         {
             float x = (i * spacing) - halfWidth;
             float y = Random.Range(-halfHeight, halfHeight);
-            Vector2 newPoint = new Vector2(x, y) * scalar;
+            Vector2 newPoint = new Vector2(x*scalarX, y*scalarY);
             Debug.Log(newPoint);
             points.Add(newPoint);
             

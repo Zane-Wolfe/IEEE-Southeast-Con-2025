@@ -7,7 +7,7 @@ using UnityEngine;
     [SerializeField] private float day_night_cycle_speed = 1;
 
     public GameData gameData;
-    private float elapsed_hours = 12;
+    private float elapsed_hours = 23;
 
     // Update is called once per frame
     void Update()
