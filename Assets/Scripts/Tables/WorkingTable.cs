@@ -57,13 +57,27 @@ public class WorkingTable : BaseTable
     /// <param name="ice">The Ice object to transform.</param>
     private void TransformIceToSculpture(Ice ice)
     {
+        if (ice == null)
+        {
+            Debug.LogError("Attempted to transform null ice object");
+            return;
+        }
+
         Debug.Log("Transforming Ice to Sculpture");
         
         // Remove the ice from the melt manager before destroying it
-        IceMeltManager.Instance.RemoveIce(ice);
+        if (IceMeltManager.Instance != null)
+        {
+            IceMeltManager.Instance.RemoveIce(ice);
+        }
         
         // Remove the Ice component and add the Sculpture component
         Sculpture sculpture = (Sculpture)ice.gameObject.AddComponent(typeof(Sculpture));
+        if (sculpture == null)
+        {
+            Debug.LogError("Failed to add Sculpture component");
+            return;
+        }
 
         // Copy all properties from the original ice
         sculpture.CopyFromIce(ice);
@@ -71,30 +85,53 @@ public class WorkingTable : BaseTable
         Destroy(ice);
 
         // Add the sculpture back to the melt manager
-        IceMeltManager.Instance.AddIce(sculpture);
+        if (IceMeltManager.Instance != null)
+        {
+            IceMeltManager.Instance.AddIce(sculpture);
+        }
 
         // Swap the mesh if we have sculpture meshes available
         if (sculptureMeshes != null && sculptureMeshes.Length > 0)
         {
             MeshFilter meshFilter = sculpture.GetComponent<MeshFilter>();
-            MeshFilter glowMeshFilter = sculpture.transform.GetChild(0).GetComponent<MeshFilter>();
             if (meshFilter != null)
             {
                 // Randomly select a sculpture mesh
                 var randomSculptureMesh = sculptureMeshes[UnityEngine.Random.Range(0, sculptureMeshes.Length)];
                 meshFilter.mesh = randomSculptureMesh;
-                glowMeshFilter.mesh = randomSculptureMesh;
 
+                // Try to update the glow mesh if it exists
+                if (sculpture.transform.childCount > 0)
+                {
+                    MeshFilter glowMeshFilter = sculpture.transform.GetChild(0).GetComponent<MeshFilter>();
+                    if (glowMeshFilter != null)
+                    {
+                        glowMeshFilter.mesh = randomSculptureMesh;
+                    }
+                }
             }
+            else
+            {
+                Debug.LogWarning("MeshFilter component missing from sculpture object");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No sculpture meshes available for transformation");
         }
 
         sculpture.IsLockedOnTable = false;
-        playerInteractHandler.AddInteractableObject(sculpture.gameObject);
+        if (playerInteractHandler != null)
+        {
+            playerInteractHandler.AddInteractableObject(sculpture.gameObject);
+        }
+        else
+        {
+            Debug.LogWarning("PlayerInteractHandler reference is missing on WorkingTable");
+        }
 
         // TODO: Add particle effect
-
         // TODO: Add sound effect
-
         // TODO: Record the chisel quality
     }
 
@@ -115,7 +152,7 @@ public class WorkingTable : BaseTable
     /// <returns>True if the table is empty and can accept the Ice object, false otherwise.</returns>
     public override bool CanPlaceIce(Ice ice)
     {
-        if (playerController.GetHeldItem() == ice.gameObject) 
+        if (playerController != null && playerController.GetHeldItem() == ice.gameObject) 
         {
             return false;
         }
