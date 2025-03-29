@@ -10,6 +10,7 @@ public class WorkingTable : BaseTable
     [SerializeField] private Mesh[] sculptureMeshes; // Array of possible sculpture meshes
     [SerializeField] private PlayerInteractHandler playerInteractHandler;
     [SerializeField] private AudioClip[] effortSounds; // Array of effort sound effects
+    [SerializeField] private AudioClip[] transformSounds; // Array of transformation sound effects
     private AudioSource audioSource;
     private int hitCount = 0;
     private const int HITS_REQUIRED = 5;
@@ -150,8 +151,14 @@ public class WorkingTable : BaseTable
             Debug.LogWarning("PlayerInteractHandler reference is missing on WorkingTable");
         }
 
+        // Play a random transformation sound effect
+        if (transformSounds != null && transformSounds.Length > 0)
+        {
+            AudioClip randomSound = transformSounds[UnityEngine.Random.Range(0, transformSounds.Length)];
+            audioSource.PlayOneShot(randomSound);
+        }
+
         // TODO: Add particle effect
-        // TODO: Add sound effect
         // TODO: Record the chisel quality
     }
 
