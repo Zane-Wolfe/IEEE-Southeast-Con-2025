@@ -16,6 +16,11 @@ public class IceMeltManager : MonoBehaviour
     /// </summary>
     private List<Ice> ices = new List<Ice>();
 
+    /// <summary>
+    /// List of ice objects to be destroyed in the next frame.
+    /// </summary>
+    private List<Ice> icesToDestroy = new List<Ice>();
+
     private void Awake()
     {
         if (Instance == null)
@@ -34,16 +39,34 @@ public class IceMeltManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        // Process melting for all ice objects
         for (int i = ices.Count - 1; i >= 0; i--)
         {
-            ices[i].Melt(Time.deltaTime);
-
-            if (ices[i].IsMelted())
+            Ice ice = ices[i];
+            if (ice == null)
             {
-                Destroy(ices[i].gameObject);
+                ices.RemoveAt(i);
+                continue;
+            }
+
+            ice.Melt(Time.deltaTime);
+
+            if (ice.IsMelted())
+            {
+                icesToDestroy.Add(ice);
                 ices.RemoveAt(i);
             }
         }
+
+        // Destroy melted ice objects
+        foreach (Ice ice in icesToDestroy)
+        {
+            if (ice != null)
+            {
+                Destroy(ice.gameObject);
+            }
+        }
+        icesToDestroy.Clear();
     }
 
     /// <summary>

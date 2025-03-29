@@ -10,10 +10,15 @@ public class IceDeposit : MonoBehaviour, IInteractable
     private int hitsBeforeNextIceDrop;
 
     [SerializeField] private GameObject iceCubePrefab;
+    [SerializeField] private AudioClip[] effortSounds; // Array of effort sound effects
+    [SerializeField] private AudioClip[] depositSounds; // Array of deposit sound effects
+    private AudioSource audioSource;
 
     void Start()
     {
         hitsBeforeNextIceDrop = hitsPerDrop;
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
     }
 
     void Update()
@@ -23,9 +28,12 @@ public class IceDeposit : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        //
-        // Play Ice mine sound here
-        //
+        // Play a random effort sound effect
+        if (effortSounds != null && effortSounds.Length > 0)
+        {
+            AudioClip randomSound = effortSounds[Random.Range(0, effortSounds.Length)];
+            audioSource.PlayOneShot(randomSound);
+        }
 
         hitsBeforeNextIceDrop--;
         if (hitsBeforeNextIceDrop == 0)
@@ -55,12 +63,14 @@ public class IceDeposit : MonoBehaviour, IInteractable
             rb.AddForce(transform.forward * 0.5f, ForceMode.Impulse);
         }
 
+        // Play a random deposit sound effect
+        if (depositSounds != null && depositSounds.Length > 0)
+        {
+            AudioClip randomSound = depositSounds[Random.Range(0, depositSounds.Length)];
+            audioSource.PlayOneShot(randomSound);
+        }
+
         // TODO: Add particle effect
-
-        // TODO: Add sound effect
-
         // TODO: Record the pick quality
     }
-
-    
 }

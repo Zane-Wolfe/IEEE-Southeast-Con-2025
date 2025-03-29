@@ -11,7 +11,15 @@ public class SellingTable : BaseTable
     [SerializeField] private MarketValueHandler marketValueHandler;
     [SerializeField] private float minSellDelay = 1f;
     [SerializeField] private float maxSellDelay = 3f;
+    [SerializeField] private AudioClip[] hahaSounds; // Array of haha sound effects
+    private AudioSource audioSource;
     private Coroutine sellCoroutine;
+
+    void Start()
+    {
+        audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false;
+    }
 
     /// <summary>
     /// Overrides CanPlaceIce to accept both Ice and Sculpture objects.
@@ -82,11 +90,17 @@ public class SellingTable : BaseTable
 
             gameData.playerMoney += finalSellValue;
             
+            // Play a random haha sound effect
+            if (hahaSounds != null && hahaSounds.Length > 0)
+            {
+                AudioClip randomSound = hahaSounds[Random.Range(0, hahaSounds.Length)];
+                audioSource.PlayOneShot(randomSound);
+            }
+            
             RemoveIce();
             Destroy(currentIce.gameObject);
 
             // TODO: Add particle effect
-            // TODO: Add sound effect
             // TODO: Add animation
             // TODO: Add text popup
         }
