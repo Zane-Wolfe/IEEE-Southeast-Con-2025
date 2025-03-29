@@ -153,6 +153,39 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &128437977 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1168417671996694252, guid: 0d4a82ffe5923463990307e86bdbbcc1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1365713574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &128437978 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1980700937770402902, guid: 0d4a82ffe5923463990307e86bdbbcc1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1365713574}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &128437979
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 128437977}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b7695c950fe3eae45b9eda588dce36cc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &309101481
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,6 +482,7 @@ MonoBehaviour:
   carMoving: 0
   cameraController: {fileID: 1415622120}
   lineOffset: {x: 0, y: 4, z: 0}
+  carDoor: {fileID: 128437978}
   playerController: {fileID: 535603909}
 --- !u!1 &436232304
 GameObject:
@@ -1026,7 +1060,7 @@ Canvas:
   m_GameObject: {fileID: 1262174974}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 330585545}
   m_PlaneDistance: 10
   m_PixelPerfect: 0
@@ -1060,6 +1094,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1328663704
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1328663705}
+  m_Layer: 0
+  m_Name: AddGlowHere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1328663705
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328663704}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1365713575}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1365713574
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1133,6 +1198,10 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6427791742848453046, guid: 0d4a82ffe5923463990307e86bdbbcc1,
         type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 1328663705}
+    - targetCorrespondingSourceObject: {fileID: 6427791742848453046, guid: 0d4a82ffe5923463990307e86bdbbcc1,
+        type: 3}
       insertIndex: -1
       addedObject: {fileID: 1834658466}
     m_AddedComponents:
@@ -1144,6 +1213,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 342790253}
+    - targetCorrespondingSourceObject: {fileID: 1168417671996694252, guid: 0d4a82ffe5923463990307e86bdbbcc1,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 128437979}
   m_SourcePrefab: {fileID: 100100000, guid: 0d4a82ffe5923463990307e86bdbbcc1, type: 3}
 --- !u!4 &1365713575 stripped
 Transform:
@@ -1784,6 +1857,51 @@ PrefabInstance:
       propertyPath: playerInteractHandler
       value: 
       objectReference: {fileID: 436232307}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.size
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: fcd2d9388e67b40729e4507b36dd1ca7, type: 3}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 97af573ba651b4fa1a31fe29bdadc222, type: 3}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: f363dad26d45048edb2314d96b15cb55, type: 3}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: e9425c959f3a845729588374ade69430, type: 3}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 923c8bcbf80ca47d7a97a31e9b0836d6, type: 3}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 7128aeafb99c7402798fc06c74ddd81b, type: 3}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: 31ea3f3464aa04dcd9c797a990a92b32, type: 3}
+    - target: {fileID: 4003508669761435455, guid: 120c51ed943494c2b9bf7a112539fe06,
+        type: 3}
+      propertyPath: effortSounds.Array.data[7]
+      value: 
+      objectReference: {fileID: 8300000, guid: f2750029a91234c1898f8e0410439470, type: 3}
     - target: {fileID: 5709200711890092551, guid: 120c51ed943494c2b9bf7a112539fe06,
         type: 3}
       propertyPath: m_LocalPosition.x

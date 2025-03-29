@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class CarHandler : MonoBehaviour, IInteractable
@@ -17,13 +18,15 @@ public class CarHandler : MonoBehaviour, IInteractable
     private LineRenderer cableLineRender;
     [SerializeField] private Vector3 lineOffset;
 
+    [SerializeField] private Transform carDoor;
+    private Animator doorAnimatorController;
+
     void Start()
     {
         this.cableLineRender = GetComponent<LineRenderer>();
         // Car starts at the bottom of the moutain
         goingUp = true;
-        
-
+        this.doorAnimatorController = carDoor.GetComponent<Animator>();
     }
 
     // Move to the target end position.
@@ -63,6 +66,10 @@ public class CarHandler : MonoBehaviour, IInteractable
                 playerController.freezePlayer = false;
                 playerController.transform.parent = null;
                 cameraController.setTarget(playerController.transform);
+
+                // Animate the door opening
+                Debug.Log("Car has stopped moving");
+                this.doorAnimatorController.SetTrigger("OpenDoor");
             }
         }
     }
@@ -76,6 +83,9 @@ public class CarHandler : MonoBehaviour, IInteractable
 
         // Calculate the journey length.
         journeyLength = Vector3.Distance(posBottom.position, posTop.position);
+
+        // Animate the door closing
+        this.doorAnimatorController.SetTrigger("CloseDoor");
     }
 
     public bool isCarMoving()

@@ -1396,3 +1396,27 @@ SceneRoots:
   - {fileID: 8325691292040197710}
   - {fileID: 4819481262239891611}
   - {fileID: 350980768814780988}
+--- !u!114 &4003508669761435455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8808587908641619239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba3c69ed9524ad0449ef96cd3f599591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameData: {fileID: 0}
+  sculptureMeshes: []
+  playerInteractHandler: {fileID: 436232307}
+  effortSounds:
+  - {fileID: 8300000, guid: 250328_0095_01, type: 3}
+  - {fileID: 8300000, guid: 250328_0095_02, type: 3}
+  - {fileID: 8300000, guid: 250328_0095_03, type: 3}
+  - {fileID: 8300000, guid: 250328_0095_04, type: 3}
+  - {fileID: 8300000, guid: 250328_0095_05, type: 3}
+  - {fileID: 8300000, guid: 250328_0095_06, type: 3}
+  - {fileID: 8300000, guid: 250328_0095_07, type: 3}
+  - {fileID: 8300000, guid: 250328_0095_08, type: 3}
