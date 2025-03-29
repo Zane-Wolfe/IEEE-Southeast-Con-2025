@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: bc40e04d04fede041a5006e59532909f
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Pixel Operator Mono 8
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 15180ae9c0be20b41ae3b34d17a3b374, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
