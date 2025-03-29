@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -11,6 +12,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField]
     private int throwForce = 5;
+
+    [SerializeField]
+    private Animator playerAnimator = null;
 
     public GameObject GetHeldItem()
     {
@@ -57,9 +61,22 @@ public class PlayerController : MonoBehaviour
     private void HandleMovementReal()
     {
         if (freezePlayer) return;
+        Quaternion diagonal = Quaternion.Euler(0, 45, 0);
+        Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         //look vector
         //gameObject.transform.forward = 
-        transform.LookAt(GetMouseDir());
+        Vector3 dir = GetMouseDir() - transform.position;
+        Debug.Log(Vector3.Dot(dir, transform.forward));
+        if (Vector3.Dot(dir, transform.forward) > 0)
+        {
+            Debug.Log("Bleh");
+            playerAnimator.SetFloat("Blend", (Vector3.SignedAngle(dir, transform.forward, Vector3.up)) * Mathf.Deg2Rad / (-0.5f * Mathf.PI));
+        }
+        else
+        {
+            transform.LookAt(GetMouseDir());
+        }
+        //transform.LookAt(GetMouseDir());
         //GetMouseDir();
 
         groundedPlayer = controller.isGrounded;
@@ -68,13 +85,23 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        Vector3 input = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        Quaternion diagonal = Quaternion.Euler(0, 45, 0);
         controller.Move(diagonal * input * Time.deltaTime * playerSpeed);
-
+        Debug.Log(input.magnitude);
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+
+        if (input.magnitude > 0.01f)
+        {
+            playerAnimator.SetBool("isWalking", true);
+            playerAnimator.speed = playerVelocity.magnitude * 10;
+        }
+        else
+        {
+            playerAnimator.SetBool("isWalking", false);
+            playerAnimator.speed = 1;
+        }
+        Debug.Log(playerVelocity.magnitude);
     }
 
     // Function is called when item is interacted with
