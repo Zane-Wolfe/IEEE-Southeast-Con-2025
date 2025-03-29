@@ -5,6 +5,11 @@ using UnityEngine;
 public class Sculpture : Ice
 {    
     /// <summary>
+    /// The type of sculpture this is. Int 0-5.
+    /// </summary>
+    public int Type { get; set; }
+    
+    /// <summary>
     /// The quality/value multiplier of the tool used to create the sculpture.
     /// </summary>
     public float SculptureQualityMultiplier { get; set; } = 1.0f;
